@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewGroup btnHome,btnCare,btnMine;
     private ImageView ivHome,ivCare,ivMine;
     private ViewPager viewPager;
-    private TextView tvTitle;
 
     private AppPagerAdapter appPagerAdapter;
 
@@ -40,24 +39,25 @@ public class MainActivity extends AppCompatActivity {
         ivCare = findViewById(R.id.iv_care);
         ivMine = findViewById(R.id.iv_mine);
         viewPager = findViewById(R.id.view_pager);
-        tvTitle = findViewById(R.id.tv_title);
-        viewPager = findViewById(R.id.view_pager);
         appPagerAdapter = new AppPagerAdapter(getSupportFragmentManager());
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewPager.setCurrentItem(0,false);
                 updateView(0);
             }
         });
         btnCare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewPager.setCurrentItem(1,false);
                 updateView(1);
             }
         });
         btnMine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewPager.setCurrentItem(2,false);
                 updateView(2);
             }
         });
@@ -87,13 +87,10 @@ public class MainActivity extends AppCompatActivity {
         ivMine.setImageResource(R.mipmap.icon_mine_normal);
         if (position == 0 ) {
             ivHome.setImageResource(R.mipmap.icon_home_select);
-            tvTitle.setText(R.string.title_home);
         }else if (position == 1) {
             ivCare.setImageResource(R.mipmap.icon_care_select);
-            tvTitle.setText(R.string.title_recommend_customer);
         }else  {
             ivMine.setImageResource(R.mipmap.icon_mine_select);
-            tvTitle.setText(R.string.title_mine);
         }
     }
 }
