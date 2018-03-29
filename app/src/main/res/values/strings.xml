@@ -7,5 +7,5 @@
     <string name="text_quit">退出</string>
     <string name="text_mine_profile">个人资料</string>
     <string name="text_change_password">密码修改</string>
-    <string name="text_test">Test</string>
+    <string name="text_request_failed">请求数据失败</string>
 </resources>

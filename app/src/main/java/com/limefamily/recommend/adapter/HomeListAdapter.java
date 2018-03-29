@@ -8,14 +8,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.limefamily.recommend.R;
+import com.limefamily.recommend.model.Hot;
+import com.limefamily.recommend.model.News;
+
+import java.util.List;
 
 /**
- * Created by liuhao on 2018/3/28.
+ *
+ * @author liuhao
+ * @date 2018/3/28
  */
 
 public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private List<News> newsList;
+    private List<Hot> hotList;
+
+    public void setData(List<News> newsList,List<Hot> hotList) {
+        this.newsList = newsList;
+        this.hotList = hotList;
+    }
 
     public static final int ITEM_NEWS = 1001;
     public static final int Item_HOT = 1002;
@@ -34,16 +48,19 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderViewHolder) {
-
+            ((HeaderViewHolder) holder).adapter.setData(newsList);
         }else if (holder instanceof NormalViewHolder) {
-
+            ((NormalViewHolder) holder).tvTitle.setText(hotList.get(position - 1).getTitle());
+            ((NormalViewHolder) holder).tvDesc.setText(hotList.get(position - 1).getDesc());
+            ((NormalViewHolder) holder).tvDate.setText(hotList.get(position - 1).getDate());
+            ((NormalViewHolder) holder).ivImage.setImageURI(hotList.get(position - 1).getCover());
         }
     }
 
 
     @Override
     public int getItemCount() {
-        return 0;
+        return hotList.size() + 1;
     }
 
     @Override
@@ -56,19 +73,27 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
         RecyclerView recyclerView;
+        List<News> newsList;
+        NewsAdapter adapter;
         public HeaderViewHolder(View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.recycler_view);
             LinearLayoutManager manager = new LinearLayoutManager(itemView.getContext());
             manager.setOrientation(RecyclerView.HORIZONTAL);
             recyclerView.setLayoutManager(manager);
-            recyclerView.setAdapter(new NewsAdapter());
+            adapter = new NewsAdapter();
+            recyclerView.setAdapter(adapter);
+        }
+
+        public void setData(List<News> newsList) {
+            this.newsList = newsList;
+            adapter.notifyDataSetChanged();
         }
     }
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivImage;
+        SimpleDraweeView ivImage;
         TextView tvTitle;
         TextView tvDesc;
         TextView tvDate;

@@ -7,7 +7,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_img"
         android:layout_width="141dp"
         android:layout_height="91dp"
