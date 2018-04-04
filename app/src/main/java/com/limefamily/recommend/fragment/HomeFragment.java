@@ -1,5 +1,6 @@
 package com.limefamily.recommend.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,9 +32,11 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private HomeListAdapter adapter;
+    private Context context;
 
     public HomeFragment() {
         super();
+        this.context = getContext();
     }
 
     public static HomeFragment newInstance() {
@@ -51,7 +54,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new HomeListAdapter();
         recyclerView.setAdapter(adapter);
     }
@@ -68,13 +71,13 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()) {
                     adapter.setData(response.body().getNews(),response.body().getHot());
                 }else {
-                    Toast.makeText(getContext(),getContext().getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,context.getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<HomeResponse> call, Throwable t) {
-                Toast.makeText(getContext(),getContext().getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,context.getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
             }
         });
     }

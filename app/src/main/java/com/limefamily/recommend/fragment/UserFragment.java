@@ -1,5 +1,6 @@
 package com.limefamily.recommend.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,8 +18,11 @@ import com.limefamily.recommend.R;
 
 public class UserFragment extends Fragment {
 
+    private Context context;
+
     public UserFragment() {
         super();
+        this.context = getContext();
     }
 
     public static UserFragment newInstance() {

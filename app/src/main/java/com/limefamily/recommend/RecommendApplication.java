@@ -2,7 +2,6 @@ package com.limefamily.recommend;
 
 import android.app.Application;
 import com.facebook.drawee.backends.pipeline.Fresco;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

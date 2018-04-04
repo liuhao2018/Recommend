@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -31,8 +30,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.hotList = hotList;
     }
 
-    public static final int ITEM_NEWS = 1001;
-    public static final int Item_HOT = 1002;
+    private static final int ITEM_NEWS = 1001;
+    private static final int ITEM_HOT = 1002;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,7 +67,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (position == 0) {
             return ITEM_NEWS;
         }
-        return Item_HOT;
+        return ITEM_HOT;
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -93,10 +92,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
 
-        SimpleDraweeView ivImage;
-        TextView tvTitle;
-        TextView tvDesc;
-        TextView tvDate;
+         SimpleDraweeView ivImage;
+         TextView tvTitle;
+         TextView tvDesc;
+         TextView tvDate;
 
         public NormalViewHolder(View itemView) {
             super(itemView);
