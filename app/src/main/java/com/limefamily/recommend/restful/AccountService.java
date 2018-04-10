@@ -15,7 +15,7 @@ import retrofit2.http.POST;
 
 public interface AccountService {
     @POST("/account/login")
-    Call<User> login(@Header("Authorization") String authorization,@Body LoginModel loginModel);
+    Call<User> login(@Body LoginModel loginModel);
 
     @POST("/account/change-password")
     Call<Void> changePassword(@Header("Authorization") String authorization,@Body ChangePasswordModel changePasswordModel);

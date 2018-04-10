@@ -6,7 +6,6 @@ import com.limefamily.recommend.model.Rebate;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Query;
@@ -20,5 +19,6 @@ public interface RebateService {
     @GET("/rebate/income")
     Call<Income> income(@Header("Authorization") String authorization,@Query("status") int status, @Query("type") int type);
 
+    @GET("/rebate/rebate-list")
     Call<List<Rebate>> rebateList(@Header("Authorization") String authorization,@Query("status") int status,@Query("type") int type);
 }
