@@ -15,7 +15,7 @@ import com.limefamily.recommend.R;
 import com.limefamily.recommend.RecommendApplication;
 import com.limefamily.recommend.adapter.HomeListAdapter;
 import com.limefamily.recommend.model.HomeResponse;
-import com.limefamily.recommend.net.HomeService;
+import com.limefamily.recommend.restful.NewsService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Retrofit retrofit = RecommendApplication.getRetrofit();
-        HomeService service = retrofit.create(HomeService.class);
+        NewsService service = retrofit.create(NewsService.class);
         Call<HomeResponse> call = service.fetchHome();
         call.enqueue(new Callback<HomeResponse>() {
             @Override

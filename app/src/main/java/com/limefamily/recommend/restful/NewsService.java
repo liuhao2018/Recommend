@@ -1,4 +1,4 @@
-package com.limefamily.recommend.net;
+package com.limefamily.recommend.restful;
 
 import com.limefamily.recommend.model.HomeResponse;
 
@@ -11,7 +11,7 @@ import retrofit2.http.GET;
  * @date 2018/3/29
  */
 
-public interface HomeService {
-    @GET("/news")
+public interface NewsService {
+    @GET("/news/")
     Call<HomeResponse> fetchHome();
 }
