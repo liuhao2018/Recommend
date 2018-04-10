@@ -8,4 +8,19 @@
     <string name="text_mine_profile">个人资料</string>
     <string name="text_change_password">密码修改</string>
     <string name="text_request_failed">请求数据失败</string>
+    <string name="text_password_manage">密码管理</string>
+    <string name="text_input_old_password">请输入旧密码</string>
+    <string name="text_input_new_password">请输入新密码</string>
+    <string name="text_input_new_password_again">请输入再次新密码</string>
+    <string name="text_password">密码</string>
+    <string name="text_change">修改</string>
+    <string name="text_account_secure">账号安全</string>
+    <string name="text_user_info">个人资料</string>
+    <string name="text_user_head">头像</string>
+    <string name="text_user_name">姓名</string>
+    <string name="text_user_sex">性别</string>
+    <string name="text_user_birthday">出身日期</string>
+    <string name="text_input_mobile">输入已经注册的手机号</string>
+    <string name="text_input_password">输入登录密码</string>
+    <string name="text_commit">提交</string>
 </resources>

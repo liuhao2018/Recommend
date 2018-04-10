@@ -56,29 +56,29 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new HomeListAdapter();
-        recyclerView.setAdapter(adapter);
+//        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Retrofit retrofit = RecommendApplication.getRetrofit();
-        NewsService service = retrofit.create(NewsService.class);
-        Call<HomeResponse> call = service.fetchHome();
-        call.enqueue(new Callback<HomeResponse>() {
-            @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
-                if (response.isSuccessful()) {
-                    adapter.setData(response.body().getNews(),response.body().getHot());
-                }else {
-                    Toast.makeText(context,context.getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
-                Toast.makeText(context,context.getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
-            }
-        });
+//        Retrofit retrofit = RecommendApplication.getRetrofit();
+//        NewsService service = retrofit.create(NewsService.class);
+//        Call<HomeResponse> call = service.fetchHome();
+//        call.enqueue(new Callback<HomeResponse>() {
+//            @Override
+//            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+//                if (response.isSuccessful()) {
+//                    adapter.setData(response.body().getNews(),response.body().getHot());
+//                }else {
+//                    Toast.makeText(context,context.getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<HomeResponse> call, Throwable t) {
+//                Toast.makeText(context,context.getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }
