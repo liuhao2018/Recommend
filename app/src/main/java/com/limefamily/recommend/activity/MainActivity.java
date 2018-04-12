@@ -16,11 +16,10 @@ import com.limefamily.recommend.adapter.AppPagerAdapter;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private ViewGroup btnHome,btnCare,btnMine;
-    private ImageView ivHome,ivCare,ivMine;
     private ViewPager viewPager;
-
+    private ImageView ivHome,ivCare,ivMine;
     private AppPagerAdapter appPagerAdapter;
+    private ViewGroup btnHome,btnCare,btnMine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

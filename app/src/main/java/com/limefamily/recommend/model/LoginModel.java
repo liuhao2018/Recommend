@@ -11,6 +11,11 @@ public class LoginModel {
     public LoginModel() {
     }
 
+    public LoginModel(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public String getUsername() {
         return username;
     }

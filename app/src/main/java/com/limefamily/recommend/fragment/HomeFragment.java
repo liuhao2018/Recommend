@@ -1,6 +1,5 @@
 package com.limefamily.recommend.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,18 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.limefamily.recommend.R;
-import com.limefamily.recommend.RecommendApplication;
 import com.limefamily.recommend.adapter.HomeListAdapter;
-import com.limefamily.recommend.model.HomeResponse;
-import com.limefamily.recommend.restful.NewsService;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  *
@@ -32,11 +22,9 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private HomeListAdapter adapter;
-    private Context context;
 
     public HomeFragment() {
         super();
-        this.context = getContext();
     }
 
     public static HomeFragment newInstance() {
@@ -47,14 +35,14 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_home_pager,null);
+        return inflater.inflate(R.layout.fragment_home_pager,null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new HomeListAdapter();
 //        recyclerView.setAdapter(adapter);
     }

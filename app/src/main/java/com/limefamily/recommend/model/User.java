@@ -1,12 +1,16 @@
 package com.limefamily.recommend.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by liuhao on 2018/4/10.
  */
 
-public class User {
+public class User implements Serializable {
+    @SerializedName("user_id")
     private int id;
     private String serial_number;
     private String name;

@@ -4,7 +4,7 @@
     <string name="title_recommend_customer">客户推荐</string>
     <string name="title_mine">我的</string>
     <string name="text_login">登录</string>
-    <string name="text_quit">退出</string>
+    <string name="text_logout">退出</string>
     <string name="text_mine_profile">个人资料</string>
     <string name="text_change_password">密码修改</string>
     <string name="text_request_failed">请求数据失败</string>
@@ -22,5 +22,38 @@
     <string name="text_user_birthday">出身日期</string>
     <string name="text_input_mobile">输入已经注册的手机号</string>
     <string name="text_input_password">输入登录密码</string>
-    <string name="text_commit">提交</string>
+    <string name="text_submit">提交</string>
+    <string name="text_input">输入</string>
+    <string name="text_input_content">你的名字</string>
+    <string name="text_confirm">确定</string>
+    <string name="text_set_use_head_failed">拍照或选取图片失败</string>
+    <string name="text_login_first">您还没有登录,请先登录</string>
+    <string name="text_mobile_syntax_error">手机号格式错误</string>
+    <string name="text_password_syntax_error">密码格式错误</string>
+    <string name="text_login_succeed">登录成功</string>
+    <string name="text_login_failed">登录异常，请稍后再试</string>
+    <string name="text_prefix_token">Bearer</string>
+    <string name="text_fetch_user_info_failed">获取用户信息失败，请稍后再试</string>
+    <string name="text_real_logout">您确定要退出吗？</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_already_logout">您已经正常退出</string>
+    <string name="text_sex_man">男</string>
+    <string name="text_sex_woman">女</string>
+    <string name="text_empty"></string>
+    <string name="text_old_password_syntax_error">原密码格式错误</string>
+    <string name="text_new_password_syntax_error">新密码格式错误</string>
+    <string name="text_new_password_different">两次新密码不一致</string>
+    <string name="text_change_password_failed">修改密码失败，请稍后再试</string>
+    <string name="text_change_password_succeed">修改密码成功</string>
+    <string-array name="array_sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="array_user_head">
+        <item>拍照</item>
+        <item>从手机相册</item>
+        <item>取消</item>
+    </string-array>
+
 </resources>

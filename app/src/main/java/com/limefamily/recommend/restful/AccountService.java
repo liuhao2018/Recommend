@@ -2,6 +2,7 @@ package com.limefamily.recommend.restful;
 
 import com.limefamily.recommend.model.ChangePasswordModel;
 import com.limefamily.recommend.model.LoginModel;
+import com.limefamily.recommend.model.LoginResponse;
 import com.limefamily.recommend.model.User;
 
 import retrofit2.Call;
@@ -15,7 +16,7 @@ import retrofit2.http.POST;
 
 public interface AccountService {
     @POST("/account/login")
-    Call<User> login(@Body LoginModel loginModel);
+    Call<LoginResponse> login(@Body LoginModel loginModel);
 
     @POST("/account/change-password")
     Call<Void> changePassword(@Header("Authorization") String authorization,@Body ChangePasswordModel changePasswordModel);

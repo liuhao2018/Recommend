@@ -12,6 +12,11 @@ public class ChangePasswordModel {
     public ChangePasswordModel() {
     }
 
+    public ChangePasswordModel(String old_password, String new_password) {
+        this.old_password = old_password;
+        this.new_password = new_password;
+    }
+
     public ChangePasswordModel(String username, String old_password, String new_password) {
         this.username = username;
         this.old_password = old_password;

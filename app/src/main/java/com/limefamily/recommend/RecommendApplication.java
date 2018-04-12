@@ -1,7 +1,9 @@
 package com.limefamily.recommend;
 
 import android.app.Application;
+
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.limefamily.recommend.util.SPUtil;
 
 import java.io.IOException;
 
@@ -20,20 +22,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecommendApplication extends Application {
 
-    private static Retrofit retrofit;
-
-    private final String API_HOST = "http://api.recommend.com";
+    private Retrofit retrofit;
+    private static RecommendApplication instance;
+    private final String API_HOST = "api.recommend.com";
+    public static final String KEY_USER_TOKEN = "key_user_token";
+    public static final String RECOMMEND_STORAGE_KIT = "recommend_storage_kit";
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        instance = this;
         Fresco.initialize(this);
-
-        initRetrofit();
-    }
-
-    private void initRetrofit() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_BASE_ADDRESS)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -41,8 +40,16 @@ public class RecommendApplication extends Application {
                 .build();
     }
 
-    public static Retrofit getRetrofit() {
+    public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    public static RecommendApplication getInstance() {
+        return instance;
+    }
+
+    public String getToken() {
+        return  SPUtil.getInstance(RECOMMEND_STORAGE_KIT).getString(KEY_USER_TOKEN,"");
     }
 
     /**

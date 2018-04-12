@@ -1,6 +1,5 @@
 package com.limefamily.recommend.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,11 +17,8 @@ import com.limefamily.recommend.R;
 
 public class RecommendFragment extends Fragment {
 
-    private Context context;
-
     public RecommendFragment() {
         super();
-        this.context = getContext();
     }
 
     public static RecommendFragment newInstance() {
@@ -33,7 +29,7 @@ public class RecommendFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_recommend_pager,null);
+        return inflater.inflate(R.layout.fragment_recommend_page,null);
     }
 
     @Override

@@ -17,27 +17,29 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
+            android:layout_height="48dp"
+            android:paddingLeft="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
                 android:text="@string/title_mine"
+                android:layout_centerVertical="true"
                 android:textSize="19sp"/>
 
             <TextView
                 android:id="@+id/tv_login_status"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="15dp"
                 android:textColor="#fff"
                 android:text="@string/text_login"
                 android:layout_gravity="right"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
                 android:textSize="19sp"/>
 
         </RelativeLayout>
@@ -50,6 +52,7 @@
             android:layout_marginTop="100dp">
 
             <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_user_head"
                 android:layout_width="76dp"
                 android:layout_height="76dp"
                 fresco:actualImageScaleType="centerCrop"
@@ -58,17 +61,19 @@
                 fresco:roundAsCircle="true"/>
 
             <LinearLayout
+                android:id="@+id/ll_user_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="invisible">
 
                 <TextView
+                    android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="#333"
-                    android:text="赵小飞"/>
+                    android:textColor="#333333"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -79,12 +84,12 @@
                     android:layout_gravity="center_vertical"/>
 
                 <TextView
+                    android:id="@+id/tv_user_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#666"
                     android:textSize="14sp"
-                    android:layout_marginLeft="8dp"
-                    android:text="138****8907"/>
+                    android:layout_marginLeft="8dp"/>
 
             </LinearLayout>
 
