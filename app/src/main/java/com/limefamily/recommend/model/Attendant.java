@@ -25,6 +25,13 @@ public class Attendant {
     public Attendant() {
     }
 
+    public Attendant(String name, int sex, String birthday, String mobile) {
+        this.name = name;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.mobile = mobile;
+    }
+
     public int getId() {
         return id;
     }

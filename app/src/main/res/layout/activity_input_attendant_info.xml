@@ -40,7 +40,7 @@
                 android:layout_centerInParent="true"
                 android:textColor="#333333"
                 android:textSize="18sp"
-                android:text="@string/text_password_manage"/>
+                android:text="@string/text_input_attendant"/>
 
         </RelativeLayout>
         <View
@@ -49,10 +49,9 @@
             android:background="#cccccc"/>
 
         <EditText
-            android:id="@+id/et_old_pwd"
+            android:id="@+id/et_attendant_name"
             android:layout_width="match_parent"
             android:layout_height="39dp"
-            android:inputType="textPassword"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:layout_marginTop="19dp"
@@ -61,43 +60,56 @@
             android:layout_marginRight="10dp"
             android:textSize="14sp"
             android:textColorHint="#c8c8c8"
-            android:hint="@string/text_input_old_password"/>
-
-        <EditText
-            android:id="@+id/et_new_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:inputType="textPassword"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:layout_marginTop="19dp"
-            android:background="@drawable/shape_common_edit_bg"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="14sp"
-            android:textColor="#333333"
-            android:textColorHint="#c8c8c8"
-            android:hint="@string/text_input_new_password"/>
-
-        <EditText
-            android:id="@+id/et_new_pwd_second"
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:inputType="textPassword"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:layout_marginTop="19dp"
-            android:background="@drawable/shape_common_edit_bg"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="14sp"
-            android:textColor="#333333"
-            android:textColorHint="#c8c8c8"
-            android:hint="@string/text_input_new_password_again"/>
-
+            android:hint="@string/text_input_attendant_name"/>
 
         <TextView
-            android:id="@+id/tv_change_password_submit"
+            android:id="@+id/tv_attendant_sex"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginTop="19dp"
+            android:background="@drawable/shape_common_edit_bg"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:textColorHint="#c8c8c8"
+            android:hint="@string/text_choose_attendant_sex"/>
+
+        <TextView
+            android:id="@+id/tv_attendant_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginTop="19dp"
+            android:background="@drawable/shape_common_edit_bg"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:textColorHint="#c8c8c8"
+            android:hint="@string/text_choose_attendant_birthday"/>
+
+        <EditText
+            android:id="@+id/et_attendant_phone"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginTop="19dp"
+            android:background="@drawable/shape_common_edit_bg"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="14sp"
+            android:textColorHint="#c8c8c8"
+            android:hint="@string/text_input_attendant_phone"/>
+
+        <TextView
+            android:id="@+id/tv_recommend_attendant_submit"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginLeft="10dp"
@@ -108,7 +120,6 @@
             android:text="@string/text_submit"
             android:layout_marginTop="31dp"
             android:gravity="center"/>
-
 
     </LinearLayout>
 

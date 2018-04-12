@@ -106,6 +106,8 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
     private void updateView(User user) {
         if (!TextUtils.isEmpty(user.getAvatar())) {
             userHeadImageView.setImageURI(user.getAvatar());
+        }else {
+            userHeadImageView.setImageResource(R.mipmap.icon_user_head_default);
         }
         if (!TextUtils.isEmpty(user.getName())) {
             userNameTextView.setText(user.getName());
@@ -161,6 +163,7 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
                                 return true;
                             }
                         }).positiveText(R.string.text_confirm)
+                .build()
                 .show();
     }
 
@@ -209,7 +212,7 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
                                     userNameTextView.setText(input.toString());
                                     Toast.makeText(UserInfoActivity.this,input.toString(),Toast.LENGTH_SHORT).show();
                                 }
-                            }).show();
+                            }).build().show();
     }
 
     /**
@@ -227,6 +230,7 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
                                 return true;
                             }
                         }).positiveText(R.string.text_submit)
+                .build()
                 .show();
     }
 

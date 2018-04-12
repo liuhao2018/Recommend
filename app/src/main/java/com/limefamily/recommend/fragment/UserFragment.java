@@ -44,7 +44,7 @@ public class UserFragment extends Fragment implements OnClickListener {
     private ViewGroup userDescribeViewGroup,userInfo,accountSecure;
     private TextView loginStatusTextView,userNameTextView,userMobileTextView;
 
-    private final int REQUEST_INTENT_LOGIN = 1;
+    private final int REQUEST_INTENT_LOGIN = 2;
 
     public UserFragment() {
         super();
@@ -163,6 +163,8 @@ public class UserFragment extends Fragment implements OnClickListener {
                         String userHead = response.body().getAvatar();
                         if (!TextUtils.isEmpty(userHead)) {
                             userHeadImageView.setImageURI(userHead);
+                        }else {
+                            userHeadImageView.setImageResource(R.mipmap.icon_user_head_default);
                         }
                         String name = response.body().getName();
                         String mobile = response.body().getMobile();

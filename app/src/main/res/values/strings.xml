@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Recommend</string>
     <string name="title_home">首页</string>
-    <string name="title_recommend_customer">客户推荐</string>
+    <string name="title_recommend">推荐</string>
+    <string name="text_customer">客户</string>
+    <string name="text_attendant">护理员</string>
+    <string name="text_recommend_customer">推荐客户</string>
+    <string name="text_recommend_attendant">推荐护理员</string>
     <string name="title_mine">我的</string>
     <string name="text_login">登录</string>
     <string name="text_logout">退出</string>
@@ -45,6 +49,36 @@
     <string name="text_new_password_different">两次新密码不一致</string>
     <string name="text_change_password_failed">修改密码失败，请稍后再试</string>
     <string name="text_change_password_succeed">修改密码成功</string>
+    <string name="text_unknown_error">遇到未知错误</string>
+    <string name="text_create_recommend_customer">推荐客户</string>
+    <string name="text_recommend_customer_list">所有客户</string>
+    <string name="text_create_recommend_attendant">推荐护理员</string>
+    <string name="text_recommend_attendant_list">所有护理员</string>
+    <string name="text_input_customer">录入客户</string>
+    <string name="text_input_attendant">录入护理员</string>
+    <string name="text_input_customer_name">请输入客户名字</string>
+    <string name="text_choose_customer_sex">请选择客户性别</string>
+    <string name="text_choose_customer_birthday">请输入客户出身日期</string>
+    <string name="text_input_customer_phone">请输入客户联系电话</string>
+    <string name="text_input_customer_contact">请输入客户联系人</string>
+    <string name="text_input_customer_with_contact">请输入客户联系人与客户的关系</string>
+    <string name="text_input_customer_care_intent">请选择客户照护意向</string>
+    <string name="text_input_attendant_name">请输入护理员名字</string>
+    <string name="text_choose_attendant_sex">请选择护理员性别</string>
+    <string name="text_choose_attendant_birthday">请输入护理员出身日期</string>
+    <string name="text_input_attendant_phone">请输入护理员手机号</string>
+    <string name="text_must_input_name">名字是必填项</string>
+    <string name="text_must_input_sex">性别是必填项</string>
+    <string name="text_must_input_phone">手机号是必填项</string>
+    <string name="text_must_input_birthday">出身日期是必填项</string>
+    <string name="text_must_input_contact_phone">客户联系人电话是必填项</string>
+    <string name="text_must_input_contact">客户联系人是必填项</string>
+    <string name="text_must_input_relation">客户联系人与客户的关系是必填项</string>
+    <string name="text_must_input_care_intent">客户意向是必填项</string>
+    <string name="text_recommend_attendant_failed">推荐护理员失败，请稍后再试</string>
+    <string name="text_recommend_attendant_succeed">推荐护理员成功</string>
+    <string name="text_recommend_customer_failed">推荐客户失败，请稍后再试</string>
+    <string name="text_recommend_customer_succeed">推荐客户成功</string>
     <string-array name="array_sex">
         <item>男</item>
         <item>女</item>
@@ -54,6 +88,19 @@
         <item>拍照</item>
         <item>从手机相册</item>
         <item>取消</item>
+    </string-array>
+
+    <string-array name="array_customer_with_contact">
+        <item>本人</item>
+        <item>配偶</item>
+        <item>子女</item>
+        <item>其他</item>
+    </string-array>
+
+    <string-array name="array_care_intent">
+        <item>驻站照护</item>
+        <item>驻家照护</item>
+        <item>其它</item>
     </string-array>
 
 </resources>

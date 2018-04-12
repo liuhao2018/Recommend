@@ -1,6 +1,7 @@
 package com.limefamily.recommend;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.limefamily.recommend.util.SPUtil;
@@ -38,6 +39,7 @@ public class RecommendApplication extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(generateClient())
                 .build();
+        Log.d("test",getToken());
     }
 
     public Retrofit getRetrofit() {

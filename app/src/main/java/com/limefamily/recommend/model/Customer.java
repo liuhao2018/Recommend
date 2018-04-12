@@ -31,6 +31,16 @@ public class Customer {
     public Customer() {
     }
 
+    public Customer(String name,int sex,String birthday, String contact,String mobile, String contact_relation, String intention) {
+        this.name = name;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.mobile = mobile;
+        this.contact = contact;
+        this.contact_relation = contact_relation;
+        this.intention = intention;
+    }
+
     public Customer(int id, String name, int sex, String birthday, String mobile, String id_number, String serial_number, int address_id, String contact, String contact_relation, String intention, int introduced_by, int status, String deal_time, String remark, List<String> ext_attr, int created_by, int updated_by, String created_at, String updated_at) {
         this.id = id;
         this.name = name;
