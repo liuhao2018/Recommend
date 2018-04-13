@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         if (TextUtils.isEmpty(password) || password.length() < PasswordManageActivity.PASSWORD_LENGTH ) {
-            Toast.makeText(this,getString(R.string.text_mobile_syntax_error),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.text_password_syntax_error),Toast.LENGTH_SHORT).show();
             passwordEditText.setText(getString(R.string.text_empty));
             return;
         }

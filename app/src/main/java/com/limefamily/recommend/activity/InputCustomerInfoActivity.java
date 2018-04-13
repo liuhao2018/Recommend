@@ -17,6 +17,7 @@ import com.limefamily.recommend.R;
 import com.limefamily.recommend.RecommendApplication;
 import com.limefamily.recommend.model.Customer;
 import com.limefamily.recommend.restful.RecommendService;
+import com.limefamily.recommend.util.FormatUtil;
 import com.limefamily.recommend.util.PhoneUtil;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +35,13 @@ public class InputCustomerInfoActivity extends AppCompatActivity {
     private EditText customerNameEditView,customerPhoneEditText,customerContactEditView;
     private TextView customerSexTextView,customerBirthdayTextView,customerWithContactTextView,
             customerCareIntentTextView,submitCustomerTextView;
+
+    public static final String MODE_NORMAL = "mode_normal";
+    public static final String MODE_UPDATE = "mode_update";
+    public static final String KEY_MODE = "key_mode";
+    public static final String KSY_MODEL = "key_model";
+
+    private String currentMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +86,40 @@ public class InputCustomerInfoActivity extends AppCompatActivity {
                 submitCustomer();
             }
         });
+
+        resolveMode();
+
     }
+
+    private void resolveMode() {
+        currentMode =  getIntent().getExtras().getString(KEY_MODE,"");
+        if (MODE_NORMAL.equals(currentMode)) {
+            currentMode = MODE_NORMAL;
+        }else if (MODE_UPDATE.equals(currentMode)) {
+            currentMode = MODE_UPDATE;
+            Customer customer = (Customer) getIntent().getExtras().getSerializable(KSY_MODEL);
+            if (customer == null) {
+                Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            }else {
+                writeCustomerData(customer);
+            }
+        }else {
+            currentMode = MODE_NORMAL;
+        }
+    }
+
+    private void writeCustomerData(Customer customer) {
+        customerNameEditView.setText(customer.getName());
+        customerPhoneEditText.setText(customer.getMobile());
+        customerContactEditView.setText(customer.getContact());
+        customerCareIntentTextView.setText(customer.getIntention());
+        customerWithContactTextView.setText(customer.getContact_relation());
+        customerSexTextView.setText(FormatUtil.getInstance().formatSex(customer.getSex()));
+        customerBirthdayTextView.setText(FormatUtil.getInstance().formatDetailDate(customer.getBirthday()));
+    }
+
 
     private void chooseSex() {
         new MaterialDialog.Builder(this)

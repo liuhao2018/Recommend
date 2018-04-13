@@ -89,11 +89,6 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
                 }
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         swipeToLoadLayout.post(new Runnable() {
             @Override
             public void run() {

@@ -1,12 +1,13 @@
 package com.limefamily.recommend.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by liuhao on 2018/4/10.
  */
 
-public class Customer {
+public class Customer implements Serializable {
     private int id;
     private String name;
     private int sex;

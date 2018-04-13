@@ -156,11 +156,23 @@
 
                 <TextView
                     android:id="@+id/tv_customer_mobile"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
                     android:textColor="#666666"
                     android:layout_marginLeft="15dp"/>
+
+                <TextView
+                    android:id="@+id/tv_edit_customer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="13sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/text_edit"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
 

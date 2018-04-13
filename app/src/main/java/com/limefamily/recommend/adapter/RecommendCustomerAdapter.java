@@ -1,7 +1,7 @@
 package com.limefamily.recommend.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.limefamily.recommend.R;
+import com.limefamily.recommend.activity.InputCustomerInfoActivity;
 import com.limefamily.recommend.model.Customer;
 import com.limefamily.recommend.util.FormatUtil;
 
@@ -50,7 +51,7 @@ public class RecommendCustomerAdapter extends RecyclerView.Adapter<RecommendCust
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Customer customer = customers.get(position);
+        final Customer customer = customers.get(position);
         if (customer != null ) {
             String createdDate = customer.getCreated_at();
             if (!TextUtils.isEmpty(createdDate)) {
@@ -82,6 +83,18 @@ public class RecommendCustomerAdapter extends RecyclerView.Adapter<RecommendCust
             if (!TextUtils.isEmpty(mobile)) {
                 holder.customerMobileTextView.setText(mobile);
             }
+            holder.customerEditedTextView.setVisibility(View.VISIBLE);
+            holder.customerEditedTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, InputCustomerInfoActivity.class);
+                    intent.putExtra(InputCustomerInfoActivity.KEY_MODE,InputCustomerInfoActivity.MODE_UPDATE);
+                    intent.putExtra(InputCustomerInfoActivity.KSY_MODEL,customer);
+                    context.startActivity(intent);
+                }
+            });
+        }else {
+            holder.customerEditedTextView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -92,6 +105,7 @@ public class RecommendCustomerAdapter extends RecyclerView.Adapter<RecommendCust
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView customerEditedTextView;
         TextView customerSexTextView;
         TextView customerNameTextView;
         TextView customerMobileTextView;
@@ -101,6 +115,7 @@ public class RecommendCustomerAdapter extends RecyclerView.Adapter<RecommendCust
 
         public ViewHolder(View itemView) {
             super(itemView);
+            customerEditedTextView = itemView.findViewById(R.id.tv_edit_customer);
             customerSexTextView = itemView.findViewById(R.id.tv_customer_sex);
             customerNameTextView = itemView.findViewById(R.id.tv_customer_name);
             customerMobileTextView = itemView.findViewById(R.id.tv_customer_mobile);
