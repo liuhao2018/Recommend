@@ -40,6 +40,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class UserFragment extends Fragment implements OnClickListener {
 
+    private final int SPLIT_START = 3;
+    private final int SPLIT_END = 7;
+    private final String REPLACE_CONTENT = "****";
     private SimpleDraweeView userHeadImageView;
     private ViewGroup userDescribeViewGroup,userInfo,accountSecure;
     private TextView loginStatusTextView,userNameTextView,userMobileTextView;
@@ -171,7 +174,14 @@ public class UserFragment extends Fragment implements OnClickListener {
                         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(mobile)) {
                             userDescribeViewGroup.setVisibility(View.VISIBLE);
                             userNameTextView.setText(name);
-                            userMobileTextView.setText(mobile);
+                            try {
+                                StringBuilder stringBuilder = new StringBuilder(mobile);
+                                stringBuilder.replace(SPLIT_START,SPLIT_END, REPLACE_CONTENT);
+                                userMobileTextView.setText(stringBuilder.toString());
+                            }catch (Exception e) {
+                                e.printStackTrace();
+                                userMobileTextView.setText(getString(R.string.text_empty));
+                            }
                         }
                     }else {
                         Toast.makeText(getActivity(),getString(R.string.text_fetch_user_info_failed),Toast.LENGTH_SHORT).show();

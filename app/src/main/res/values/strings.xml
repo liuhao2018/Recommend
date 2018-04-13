@@ -51,9 +51,9 @@
     <string name="text_change_password_succeed">修改密码成功</string>
     <string name="text_unknown_error">遇到未知错误</string>
     <string name="text_create_recommend_customer">推荐客户</string>
-    <string name="text_recommend_customer_list">所有客户</string>
+    <string name="text_recommend_customer_list">我推荐的客户</string>
     <string name="text_create_recommend_attendant">推荐护理员</string>
-    <string name="text_recommend_attendant_list">所有护理员</string>
+    <string name="text_recommend_attendant_list">我推荐的护理员</string>
     <string name="text_input_customer">录入客户</string>
     <string name="text_input_attendant">录入护理员</string>
     <string name="text_input_customer_name">请输入客户名字</string>
@@ -80,7 +80,14 @@
     <string name="text_recommend_customer_failed">推荐客户失败，请稍后再试</string>
     <string name="text_recommend_customer_succeed">推荐客户成功</string>
     <string name="text_recommend_list">推荐列表</string>
-
+    <string name="text_customer_name">客户姓名：</string>
+    <string name="text_customer_sex">客户性别：</string>
+    <string name="text_customer_birthday">客户出身日期：</string>
+    <string name="text_customer_mobile">客户手机号：</string>
+    <string name="text_attendant_name">护理员姓名：</string>
+    <string name="text_attendant_sex">护理员性别：</string>
+    <string name="text_attendant_birthday">护理员出身日期：</string>
+    <string name="text_attendant_mobile">护理员手机号：</string>
     <string-array name="array_sex">
         <item>男</item>
         <item>女</item>

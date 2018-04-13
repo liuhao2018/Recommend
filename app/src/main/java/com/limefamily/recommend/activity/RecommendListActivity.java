@@ -19,6 +19,8 @@ import com.limefamily.recommend.adapter.RecommendCustomerAdapter;
 import com.limefamily.recommend.model.Attendant;
 import com.limefamily.recommend.model.Customer;
 import com.limefamily.recommend.restful.RecommendService;
+import com.limefamily.recommend.widget.GoogleCircleProgressView;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,7 +48,6 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
         initView();
     }
 
-
     private void initData() {
         recommendType = getIntent().getIntExtra(RecommendNavigationActivity.KEY_RECOMMEND_TYPE,DEFAULT_RECOMMEND_TYPE);
         if (recommendType == DEFAULT_RECOMMEND_TYPE) {
@@ -56,6 +57,12 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
     }
 
     private void initView() {
+        View headerView = findViewById(R.id.swipe_refresh_header);
+        View footerView = findViewById(R.id.swipe_load_more_footer);
+        GoogleCircleProgressView headerGoogleCircleProgressView = headerView.findViewById(R.id.googleProgress);
+        headerGoogleCircleProgressView.setColorSchemeResources(R.color.app_default);
+        GoogleCircleProgressView footerGoogleCircleProgressView = footerView.findViewById(R.id.googleProgress);
+        footerGoogleCircleProgressView.setColorSchemeResources(R.color.app_default);
         swipeToLoadLayout = findViewById(R.id.swipeToLoadLayout);
         recyclerView = findViewById(R.id.swipe_target);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
