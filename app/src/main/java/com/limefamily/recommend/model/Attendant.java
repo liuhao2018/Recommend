@@ -14,7 +14,7 @@ public class Attendant {
     private String serial_number;
     private int address_id;
     private int introduced_by;
-    private int status;
+    private String status;
     private String entry_time;
     private String remark;
     private int created_by;
@@ -104,11 +104,11 @@ public class Attendant {
         this.introduced_by = introduced_by;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

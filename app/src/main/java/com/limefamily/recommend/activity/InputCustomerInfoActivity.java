@@ -195,6 +195,8 @@ public class InputCustomerInfoActivity extends AppCompatActivity {
         String token = RecommendApplication.getInstance().getToken();
         if (TextUtils.isEmpty(token)) {
             Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
         progressBar.setVisibility(View.VISIBLE);
         Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();

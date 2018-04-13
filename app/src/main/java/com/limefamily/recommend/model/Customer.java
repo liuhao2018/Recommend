@@ -19,7 +19,7 @@ public class Customer {
     private String contact_relation;
     private String intention;
     private int introduced_by;
-    private int status;
+    private String status;
     private String deal_time;
     private String remark;
     private List<String> ext_attr;
@@ -41,7 +41,7 @@ public class Customer {
         this.intention = intention;
     }
 
-    public Customer(int id, String name, int sex, String birthday, String mobile, String id_number, String serial_number, int address_id, String contact, String contact_relation, String intention, int introduced_by, int status, String deal_time, String remark, List<String> ext_attr, int created_by, int updated_by, String created_at, String updated_at) {
+    public Customer(int id, String name, int sex, String birthday, String mobile, String id_number, String serial_number, int address_id, String contact, String contact_relation, String intention, int introduced_by, String status, String deal_time, String remark, List<String> ext_attr, int created_by, int updated_by, String created_at, String updated_at) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -160,11 +160,11 @@ public class Customer {
         this.introduced_by = introduced_by;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

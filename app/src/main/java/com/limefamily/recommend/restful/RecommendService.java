@@ -31,10 +31,10 @@ public interface RecommendService {
     Call<Attendant> updateAttendant(@Header("Authorization") String authorization,@Body Attendant attendant);
 
     @GET("/recommend/customer-list")
-    Call<List<Customer>> customerList(@Header("Authorization") String authorization,@Query("page") int page,@Query("page_size") int page_size,@Query("status") int status,@Query("from_time") String from_time);
+    Call<List<Customer>> customerList(@Header("Authorization") String authorization,@Query("page") int page,@Query("page_size") int page_size,@Query("from_time") String from_time);
 
     @GET("/recommend/attendant-list")
-    Call<List<Attendant>> attendantList(@Header("Authorization") String authorization,@Query("page") int page,@Query("page_size") int page_size,@Query("status") int status,@Query("from_time") String from_time);
+    Call<List<Attendant>> attendantList(@Header("Authorization") String authorization,@Query("page") int page,@Query("page_size") int page_size,@Query("from_time") String from_time);
 
     @GET("/recommend/status-list")
     Call<List<Status>> statusList(@Header("Authorization") String authorization,@Query("type") int type);

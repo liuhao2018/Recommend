@@ -74,6 +74,7 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
         String token =RecommendApplication.getInstance().getToken();
         if(TextUtils.isEmpty(token)) {
             Toast.makeText(UserInfoActivity.this,getString(R.string.text_fetch_user_info_failed),Toast.LENGTH_SHORT).show();
+            finish();
             return;
         }
         Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();

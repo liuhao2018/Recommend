@@ -84,8 +84,9 @@ public class PasswordManageActivity extends AppCompatActivity {
     private void changePassword(final String oldPassword, final String newPassword) {
         final String token = RecommendApplication.getInstance().getToken();
         if (TextUtils.isEmpty(token)) {
-            Toast.makeText(this,getString(R.string.text_change_password_failed),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
             finish();
+            return;
         }
         final UserService userService = retrofit.create(UserService.class);
         Call<User> userCall = userService.view(String.format("%s %s",getString(R.string.text_prefix_token),token));

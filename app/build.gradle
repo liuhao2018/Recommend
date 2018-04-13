@@ -44,4 +44,5 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
     implementation 'com.jph.takephoto:takephoto_library:4.0.3'
     implementation 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
+    implementation 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
 }

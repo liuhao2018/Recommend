@@ -79,6 +79,8 @@
     <string name="text_recommend_attendant_succeed">推荐护理员成功</string>
     <string name="text_recommend_customer_failed">推荐客户失败，请稍后再试</string>
     <string name="text_recommend_customer_succeed">推荐客户成功</string>
+    <string name="text_recommend_list">推荐列表</string>
+
     <string-array name="array_sex">
         <item>男</item>
         <item>女</item>
@@ -101,6 +103,17 @@
         <item>驻站照护</item>
         <item>驻家照护</item>
         <item>其它</item>
+    </string-array>
+
+    <string-array name="array_recommend_status">
+        <item>已推荐</item>
+        <item>咨询</item>
+        <item>评估</item>
+        <item>签约</item>
+        <item>收费</item>
+        <item>合约中</item>
+        <item>合约结束</item>
+        <item>已关闭</item>
     </string-array>
 
 </resources>
