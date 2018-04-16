@@ -47,7 +47,6 @@ public class RebateFragment extends Fragment implements OnRefreshListener,OnLoad
     private int attendantPage = 0;
     public static final int TYPE_CUSTOMER = 0;
     public static final int DEFAULT_PAGE_SIZE = 20;
-    public static final String FROM_TIME = "1970-01-01";
     public static final String KEY_REBATE_TYPE = "key_rebate_type";
 
     public static RebateFragment newInstance(int rebateType) {
@@ -139,10 +138,10 @@ public class RebateFragment extends Fragment implements OnRefreshListener,OnLoad
         Call<List<Rebate>> call;
         if (currentRebateType == TYPE_CUSTOMER) {
             call = rebateService.rebateList(String.format("%s %s", getString(R.string.text_prefix_token), token),
-                    customerPage, DEFAULT_PAGE_SIZE, FROM_TIME, currentRebateType);
+                    customerPage, DEFAULT_PAGE_SIZE, getString(R.string.text_from_time_default), currentRebateType);
         }else {
             call = rebateService.rebateList(String.format("%s %s", getString(R.string.text_prefix_token), token),
-                    attendantPage, DEFAULT_PAGE_SIZE, FROM_TIME, currentRebateType);
+                    attendantPage, DEFAULT_PAGE_SIZE, getString(R.string.text_from_time_default), currentRebateType);
         }
         call.enqueue(new Callback<List<Rebate>>() {
             @Override

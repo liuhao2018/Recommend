@@ -103,7 +103,7 @@
     <string name="text_rebate_count">返利笔数</string>
     <string name="text_money_unit">元</string>
     <string name="text_count_unit">次</string>
-    <string name="text_fetch_rebate_list_failed"></string>
+    <string name="text_from_time_default">1970-01-01</string>
     <string-array name="array_sex">
         <item>男</item>
         <item>女</item>

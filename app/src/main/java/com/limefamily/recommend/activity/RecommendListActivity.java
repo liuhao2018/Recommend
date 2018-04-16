@@ -39,7 +39,6 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
     private SwipeToLoadLayout swipeToLoadLayout;
     private final int DEFAULT_RECOMMEND_TYPE = 0;
     public static final int DEFAULT_PAGE_SIZE = 20;
-    public static final String FROM_TIME = "1970-01-01";
     private RecommendCustomerAdapter recommendCustomerAdapter;
     private RecommendAttendantAdapter recommendAttendantAdapter;
 
@@ -159,7 +158,7 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
         Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();
         RecommendService recommendService = retrofit.create(RecommendService.class);
         if (recommendType == RecommendNavigationActivity.TYPE_CUSTOMER) {
-            Call<List<Customer>> call = recommendService.customerList(String.format("%s %s",tokenPrefix,token),currentPage,DEFAULT_PAGE_SIZE,FROM_TIME);
+            Call<List<Customer>> call = recommendService.customerList(String.format("%s %s",tokenPrefix,token),currentPage,DEFAULT_PAGE_SIZE,getString(R.string.text_from_time_default));
             call.enqueue(new Callback<List<Customer>>() {
                 @Override
                 public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
@@ -206,7 +205,7 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
                 }
             });
         }else if (recommendType == RecommendNavigationActivity.TYPE_ATTENDANT) {
-            Call<List<Attendant>> call = recommendService.attendantList(String.format("%s %s",tokenPrefix,token),currentPage,DEFAULT_PAGE_SIZE,FROM_TIME);
+            Call<List<Attendant>> call = recommendService.attendantList(String.format("%s %s",tokenPrefix,token),currentPage,DEFAULT_PAGE_SIZE,getString(R.string.text_from_time_default));
             call.enqueue(new Callback<List<Attendant>>() {
                 @Override
                 public void onResponse(Call<List<Attendant>> call, Response<List<Attendant>> response) {

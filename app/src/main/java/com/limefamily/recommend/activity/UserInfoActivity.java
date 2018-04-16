@@ -88,11 +88,11 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         User user = response.body();
                         updateView(user);
+                        fetchIncome();
                     }else {
                         Toast.makeText(UserInfoActivity.this,getString(R.string.text_fetch_user_info_failed),Toast.LENGTH_SHORT).show();
                     }
@@ -136,11 +136,11 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
         }
         Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();
         RebateService rebateService = retrofit.create(RebateService.class);
-        String from_time = "1970-01--01";
-        Call<Income> call = rebateService.income(String.format("%s %s",getString(R.string.text_prefix_token),token),from_time);
+        Call<Income> call = rebateService.income(String.format("%s %s",getString(R.string.text_prefix_token),token),getString(R.string.text_from_time_default));
         call.enqueue(new Callback<Income>() {
             @Override
             public void onResponse(Call<Income> call, Response<Income> response) {
+                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     if (response.body() == null) {
                         rebateIncomeTextView.setVisibility(View.GONE);
@@ -148,8 +148,8 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
                     }else {
                         rebateIncomeTextView.setVisibility(View.VISIBLE);
                         rebateCountTextView.setVisibility(View.VISIBLE);
-                        rebateIncomeTextView.setText(String.format("%d",response.body().getAmount(),getString(R.string.text_money_unit)));
-                        rebateCountTextView.setText(String.format("%d",response.body().getCount(),getString(R.string.text_count_unit)));
+                        rebateIncomeTextView.setText(String.format("%d%s",response.body().getAmount(),getString(R.string.text_money_unit)));
+                        rebateCountTextView.setText(String.format("%d%s",response.body().getCount(),getString(R.string.text_count_unit)));
                     }
                 }else {
                     rebateIncomeTextView.setVisibility(View.GONE);
@@ -159,6 +159,7 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
 
             @Override
             public void onFailure(Call<Income> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 rebateIncomeTextView.setVisibility(View.GONE);
                 rebateCountTextView.setVisibility(View.GONE);
             }
