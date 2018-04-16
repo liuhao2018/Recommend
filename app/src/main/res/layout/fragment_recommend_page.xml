@@ -87,4 +87,32 @@
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_rebate"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#ffffff"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:text="@string/text_rebate"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_mine_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#e1e1e1"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
 </LinearLayout>

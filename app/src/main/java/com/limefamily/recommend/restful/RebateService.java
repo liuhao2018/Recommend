@@ -17,8 +17,8 @@ import retrofit2.http.Query;
 public interface RebateService {
 
     @GET("/rebate/income")
-    Call<Income> income(@Header("Authorization") String authorization,@Query("status") int status, @Query("type") int type);
+    Call<Income> income(@Header("Authorization") String authorization,@Query("from_time") String from_time);
 
     @GET("/rebate/rebate-list")
-    Call<List<Rebate>> rebateList(@Header("Authorization") String authorization,@Query("status") int status,@Query("type") int type);
+    Call<List<Rebate>> rebateList(@Header("Authorization") String authorization,@Query("page") int page,@Query("page_size") int page_size,@Query("from_time") String from_time,@Query("type") int type);
 }

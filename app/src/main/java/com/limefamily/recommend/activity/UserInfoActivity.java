@@ -23,7 +23,9 @@ import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.limefamily.recommend.R;
 import com.limefamily.recommend.RecommendApplication;
+import com.limefamily.recommend.model.Income;
 import com.limefamily.recommend.model.User;
+import com.limefamily.recommend.restful.RebateService;
 import com.limefamily.recommend.restful.UserService;
 
 import java.io.File;
@@ -37,7 +39,8 @@ import retrofit2.Retrofit;
 
 public class UserInfoActivity extends TakePhotoActivity implements View.OnClickListener {
 
-    private TextView userNameTextView,userSexTextView,userBirthdayTextView;
+    private TextView userNameTextView,userSexTextView,userBirthdayTextView,
+            rebateIncomeTextView,rebateCountTextView;
     private SimpleDraweeView userHeadImageView;
     private TimePickerView timePickerView;
     private ProgressBar progressBar;
@@ -58,6 +61,8 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
         userHeadImageView = findViewById(R.id.iv_user_head);
         userSexTextView = findViewById(R.id.tv_user_sex);
         userBirthdayTextView = findViewById(R.id.tv_user_birthday);
+        rebateIncomeTextView = findViewById(R.id.tv_user_rebate_money);
+        rebateCountTextView = findViewById(R.id.tv_user_rebate_count);
         progressBar = findViewById(R.id.pb);
         View userHeadView = findViewById(R.id.rl_user_head);
         View userNameView = findViewById(R.id.rl_user_name);
@@ -120,6 +125,44 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
         }else {
             userSexTextView.setText(getString(R.string.text_empty));
         }
+    }
+
+    private void fetchIncome() {
+        String token = RecommendApplication.getInstance().getToken();
+        if (TextUtils.isEmpty(token)) {
+            Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();
+        RebateService rebateService = retrofit.create(RebateService.class);
+        String from_time = "1970-01--01";
+        Call<Income> call = rebateService.income(String.format("%s %s",getString(R.string.text_prefix_token),token),from_time);
+        call.enqueue(new Callback<Income>() {
+            @Override
+            public void onResponse(Call<Income> call, Response<Income> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() == null) {
+                        rebateIncomeTextView.setVisibility(View.GONE);
+                        rebateCountTextView.setVisibility(View.GONE);
+                    }else {
+                        rebateIncomeTextView.setVisibility(View.VISIBLE);
+                        rebateCountTextView.setVisibility(View.VISIBLE);
+                        rebateIncomeTextView.setText(String.format("%d",response.body().getAmount(),getString(R.string.text_money_unit)));
+                        rebateCountTextView.setText(String.format("%d",response.body().getCount(),getString(R.string.text_count_unit)));
+                    }
+                }else {
+                    rebateIncomeTextView.setVisibility(View.GONE);
+                    rebateCountTextView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Income> call, Throwable t) {
+                rebateIncomeTextView.setVisibility(View.GONE);
+                rebateCountTextView.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

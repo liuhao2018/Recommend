@@ -98,6 +98,12 @@
     <string name="text_change_attendant_info_succeed">修改护理员信息成功</string>
     <string name="text_not_support_edit_user_info">暂不支持用户自主修改个人信息，如果需要帮助请与我们联系</string>
     <string name="text_not_support_edit_mobile">暂不支持修改手机号</string>
+    <string name="text_rebate">返利</string>
+    <string name="text_rebate_money">返利总额</string>
+    <string name="text_rebate_count">返利笔数</string>
+    <string name="text_money_unit">元</string>
+    <string name="text_count_unit">次</string>
+    <string name="text_fetch_rebate_list_failed"></string>
     <string-array name="array_sex">
         <item>男</item>
         <item>女</item>
@@ -131,6 +137,11 @@
         <item>合约中</item>
         <item>合约结束</item>
         <item>已关闭</item>
+    </string-array>
+
+    <string-array name="array_rebate_type">
+        <item>客户</item>
+        <item>护理员</item>
     </string-array>
 
 </resources>
