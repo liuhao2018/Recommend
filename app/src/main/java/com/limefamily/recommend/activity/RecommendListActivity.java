@@ -16,10 +16,13 @@ import com.limefamily.recommend.R;
 import com.limefamily.recommend.RecommendApplication;
 import com.limefamily.recommend.adapter.RecommendAttendantAdapter;
 import com.limefamily.recommend.adapter.RecommendCustomerAdapter;
+import com.limefamily.recommend.logic.ApplicationBus;
+import com.limefamily.recommend.logic.RefreshEvent;
 import com.limefamily.recommend.model.Attendant;
 import com.limefamily.recommend.model.Customer;
 import com.limefamily.recommend.restful.RecommendService;
 import com.limefamily.recommend.widget.GoogleCircleProgressView;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -46,12 +49,25 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
         setContentView(R.layout.activity_recommend_list);
         initData();
         initView();
+        initLogic();
+    }
+
+    private void initLogic() {
+        ApplicationBus.getInstance().register(this);
+    }
+
+    @Subscribe
+    public void subscribeEvent(RefreshEvent refreshEvent) {
+       if (refreshEvent != null) {
+           onRefresh();
+       }
     }
 
     private void initData() {
         recommendType = getIntent().getIntExtra(RecommendNavigationActivity.KEY_RECOMMEND_TYPE,DEFAULT_RECOMMEND_TYPE);
         if (recommendType == DEFAULT_RECOMMEND_TYPE) {
             Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
+            finish();
             return;
         }
     }
@@ -136,6 +152,7 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
         String token = RecommendApplication.getInstance().getToken();
         if (TextUtils.isEmpty(token)) {
             Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
+            finish();
             return;
         }
         String tokenPrefix = getString(R.string.text_prefix_token);
@@ -235,7 +252,17 @@ public class RecommendListActivity extends AppCompatActivity implements OnRefres
                     swipeToLoadLayout.setLoadMoreEnabled(false);
                 }
             });
+        }else {
+            Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ApplicationBus.getInstance().unregister(this);
     }
 
     private void showEmpty() {

@@ -83,13 +83,17 @@ public class RecommendCustomerAdapter extends RecyclerView.Adapter<RecommendCust
             if (!TextUtils.isEmpty(mobile)) {
                 holder.customerMobileTextView.setText(mobile);
             }
+            String intent = customer.getIntention();
+            if (!TextUtils.isEmpty(intent)) {
+                holder.customerCareIntentTextView.setText(intent);
+            }
             holder.customerEditedTextView.setVisibility(View.VISIBLE);
             holder.customerEditedTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, InputCustomerInfoActivity.class);
                     intent.putExtra(InputCustomerInfoActivity.KEY_MODE,InputCustomerInfoActivity.MODE_UPDATE);
-                    intent.putExtra(InputCustomerInfoActivity.KSY_MODEL,customer);
+                    intent.putExtra(InputCustomerInfoActivity.KEY_MODEL,customer);
                     context.startActivity(intent);
                 }
             });
@@ -110,6 +114,7 @@ public class RecommendCustomerAdapter extends RecyclerView.Adapter<RecommendCust
         TextView customerNameTextView;
         TextView customerMobileTextView;
         TextView customerBirthdayTextView;
+        TextView customerCareIntentTextView;
         TextView customerRecommendDateTextView;
         TextView customerRecommendStatusTextView;
 
@@ -120,6 +125,7 @@ public class RecommendCustomerAdapter extends RecyclerView.Adapter<RecommendCust
             customerNameTextView = itemView.findViewById(R.id.tv_customer_name);
             customerMobileTextView = itemView.findViewById(R.id.tv_customer_mobile);
             customerBirthdayTextView = itemView.findViewById(R.id.tv_customer_birthday);
+            customerCareIntentTextView = itemView.findViewById(R.id.tv_customer_intent);
             customerRecommendDateTextView = itemView.findViewById(R.id.tv_recommend_date);
             customerRecommendStatusTextView = itemView.findViewById(R.id.tv_recommend_status);
         }

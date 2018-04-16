@@ -129,10 +129,12 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
                 handleSelectUserHead();
                 break;
             case R.id.rl_user_name:
-                handleInputUserName();
+                Toast.makeText(this,getString(R.string.text_not_support_edit_user_info),Toast.LENGTH_SHORT).show();
+//                handleInputUserName();
                 break;
             case R.id.rl_user_sex:
-                handleInputUserSex();
+                Toast.makeText(this,getString(R.string.text_not_support_edit_user_info),Toast.LENGTH_SHORT).show();
+//                handleInputUserSex();
                 break;
             case R.id.rl_user_birthday:
                 handleInputUserBirthday();

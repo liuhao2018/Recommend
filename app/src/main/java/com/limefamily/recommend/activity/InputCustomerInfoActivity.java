@@ -15,6 +15,8 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.limefamily.recommend.R;
 import com.limefamily.recommend.RecommendApplication;
+import com.limefamily.recommend.logic.ApplicationBus;
+import com.limefamily.recommend.logic.RefreshEvent;
 import com.limefamily.recommend.model.Customer;
 import com.limefamily.recommend.restful.RecommendService;
 import com.limefamily.recommend.util.FormatUtil;
@@ -30,24 +32,25 @@ import retrofit2.Retrofit;
 
 public class InputCustomerInfoActivity extends AppCompatActivity {
 
+    private String currentMode;
     private ProgressBar progressBar;
     private TimePickerView timePickerView;
     private EditText customerNameEditView,customerPhoneEditText,customerContactEditView;
     private TextView customerSexTextView,customerBirthdayTextView,customerWithContactTextView,
-            customerCareIntentTextView,submitCustomerTextView;
+            customerCareIntentTextView,submitCustomerTextView,titleTextView,
+            supportEditCustomerMobileTextView;
 
     public static final String MODE_NORMAL = "mode_normal";
     public static final String MODE_UPDATE = "mode_update";
     public static final String KEY_MODE = "key_mode";
-    public static final String KSY_MODEL = "key_model";
-
-    private String currentMode;
+    public static final String KEY_MODEL = "key_model";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_customer_info);
         progressBar = findViewById(R.id.pb);
+        titleTextView = findViewById(R.id.tv_title);
         customerNameEditView = findViewById(R.id.et_customer_name);
         customerPhoneEditText = findViewById(R.id.et_customer_phone);
         customerContactEditView = findViewById(R.id.et_customer_contact);
@@ -56,6 +59,7 @@ public class InputCustomerInfoActivity extends AppCompatActivity {
         customerWithContactTextView = findViewById(R.id.tv_customer_with_contact);
         customerCareIntentTextView = findViewById(R.id.tv_customer_intent);
         submitCustomerTextView = findViewById(R.id.tv_recommend_customer_submit);
+        supportEditCustomerMobileTextView = findViewById(R.id.tv_support_edit_customer_mobile);
         customerSexTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,9 +99,15 @@ public class InputCustomerInfoActivity extends AppCompatActivity {
         currentMode =  getIntent().getExtras().getString(KEY_MODE,"");
         if (MODE_NORMAL.equals(currentMode)) {
             currentMode = MODE_NORMAL;
+            titleTextView.setText(getString(R.string.text_input_customer));
+            customerPhoneEditText.setEnabled(true);
+            supportEditCustomerMobileTextView.setVisibility(View.GONE);
         }else if (MODE_UPDATE.equals(currentMode)) {
             currentMode = MODE_UPDATE;
-            Customer customer = (Customer) getIntent().getExtras().getSerializable(KSY_MODEL);
+            titleTextView.setText(getString(R.string.text_edit_customer));
+            customerPhoneEditText.setEnabled(false);
+            supportEditCustomerMobileTextView.setVisibility(View.VISIBLE);
+            Customer customer = (Customer) getIntent().getExtras().getSerializable(KEY_MODEL);
             if (customer == null) {
                 Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
                 finish();
@@ -242,31 +252,67 @@ public class InputCustomerInfoActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();
         RecommendService recommendService = retrofit.create(RecommendService.class);
-        Call<Customer> call = recommendService.createCustomer(String.format("%s %s",getString(R.string.text_prefix_token),
-                token),new Customer(name,sexNumber,birthday,contact,mobile,relation,careIntent));
-        call.enqueue(new Callback<Customer>() {
-            @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response.isSuccessful()) {
-                    if (response.body().getId() == 0) {
-                        Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_recommend_customer_failed),Toast.LENGTH_SHORT).show();
+        if (MODE_UPDATE.equals(currentMode)) {
+            Call<Customer> call = recommendService.updateCustomer(String.format("%s %s",getString(R.string.text_prefix_token),
+                    token),new Customer(name,sexNumber,birthday,contact,mobile,relation,careIntent));
+            call.enqueue(new Callback<Customer>() {
+                @Override
+                public void onResponse(Call<Customer> call, Response<Customer> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        if (response.body() == null) {
+                            Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_change_customer_info_failed),Toast.LENGTH_SHORT).show();
+                        }else {
+                            if (response.body().getId() == 0) {
+                                Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_change_customer_info_failed),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_change_customer_info_succeed),Toast.LENGTH_SHORT).show();
+                                ApplicationBus.getInstance().post(new RefreshEvent());
+                                finish();
+                            }
+                        }
                     }else {
-                        Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_recommend_customer_succeed),Toast.LENGTH_SHORT).show();
-                        finish();
+                        Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_change_customer_info_failed),Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                }
+
+                @Override
+                public void onFailure(Call<Customer> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_change_customer_info_failed),Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else if (MODE_NORMAL.equals(currentMode)) {
+            Call<Customer> call = recommendService.createCustomer(String.format("%s %s",getString(R.string.text_prefix_token),
+                    token),new Customer(name,sexNumber,birthday,contact,mobile,relation,careIntent));
+            call.enqueue(new Callback<Customer>() {
+                @Override
+                public void onResponse(Call<Customer> call, Response<Customer> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        if (response.body().getId() == 0) {
+                            Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_recommend_customer_failed),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_recommend_customer_succeed),Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }else {
+                        Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_recommend_customer_failed),Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Customer> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_recommend_customer_failed),Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(InputCustomerInfoActivity.this,getString(R.string.text_recommend_customer_failed),Toast.LENGTH_SHORT).show();
-            }
-        });
-
+            });
+        }else {
+            Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
     }
 
 

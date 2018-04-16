@@ -15,8 +15,11 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.limefamily.recommend.R;
 import com.limefamily.recommend.RecommendApplication;
+import com.limefamily.recommend.logic.ApplicationBus;
+import com.limefamily.recommend.logic.RefreshEvent;
 import com.limefamily.recommend.model.Attendant;
 import com.limefamily.recommend.restful.RecommendService;
+import com.limefamily.recommend.util.FormatUtil;
 import com.limefamily.recommend.util.PhoneUtil;
 
 import java.text.SimpleDateFormat;
@@ -29,24 +32,32 @@ import retrofit2.Retrofit;
 
 public class InputAttendantInfoActivity extends AppCompatActivity {
 
+    private String currentMode;
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
+    public static final String MODE_NORMAL = "mode_normal";
+    public static final String MODE_UPDATE = "mode_update";
+    public static final String KEY_MODE = "key_mode";
+    public static final String KEY_MODEL = "key_model";
 
     private ProgressBar progressBar;
     private TimePickerView timePickerView;
     private EditText attendantNameEditView,attendantPhoneEditText;
-    private TextView attendantSexTextView,attendantBirthdayTextView,submitAttendantTextView;
+    private TextView attendantSexTextView,attendantBirthdayTextView,submitAttendantTextView,
+            titleTextView,supportEditAttendantMobileTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_attendant_info);
         progressBar = findViewById(R.id.pb);
+        titleTextView = findViewById(R.id.tv_title);
         attendantNameEditView = findViewById(R.id.et_attendant_name);
         attendantPhoneEditText = findViewById(R.id.et_attendant_phone);
         attendantSexTextView = findViewById(R.id.tv_attendant_sex);
         attendantBirthdayTextView = findViewById(R.id.tv_attendant_birthday);
         submitAttendantTextView = findViewById(R.id.tv_recommend_attendant_submit);
+        supportEditAttendantMobileTextView = findViewById(R.id.tv_support_edit_attendant_mobile);
         attendantSexTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +76,41 @@ public class InputAttendantInfoActivity extends AppCompatActivity {
                 submitAttendant();
             }
         });
+
+        resolveMode();
+    }
+
+    private void resolveMode() {
+        currentMode =  getIntent().getExtras().getString(KEY_MODE,"");
+        if (MODE_NORMAL.equals(currentMode)) {
+            currentMode = MODE_NORMAL;
+            titleTextView.setText(getString(R.string.text_input_attendant));
+            attendantPhoneEditText.setEnabled(true);
+            supportEditAttendantMobileTextView.setVisibility(View.GONE);
+        }else if (MODE_UPDATE.equals(currentMode)) {
+            currentMode = MODE_UPDATE;
+            titleTextView.setText(getString(R.string.text_edit_attendant));
+            attendantPhoneEditText.setEnabled(false);
+            supportEditAttendantMobileTextView.setVisibility(View.VISIBLE);
+            Attendant attendant = (Attendant) getIntent().getExtras().getSerializable(KEY_MODEL);
+            if (attendant == null) {
+                Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT)
+                        .show();
+                finish();
+                return;
+            }else {
+                writeAttendantData(attendant);
+            }
+        }else {
+            currentMode = MODE_NORMAL;
+        }
+    }
+
+    private void writeAttendantData(Attendant attendant) {
+        attendantNameEditView.setText(attendant.getName());
+        attendantPhoneEditText.setText(attendant.getMobile());
+        attendantSexTextView.setText(FormatUtil.getInstance().formatSex(attendant.getSex()));
+        attendantBirthdayTextView.setText(attendant.getBirthday());
     }
 
     private void chooseBirthday() {
@@ -147,31 +193,67 @@ public class InputAttendantInfoActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();
         RecommendService recommendService = retrofit.create(RecommendService.class);
-        Call<Attendant> call = recommendService.createAttendant(String.format("%s %s",getString(R.string.text_prefix_token),token),
-                new Attendant(name,sexNumber,birthday,mobile));
-        call.enqueue(new Callback<Attendant>() {
-            @Override
-            public void onResponse(Call<Attendant> call, Response<Attendant> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response.isSuccessful()) {
-                    if (response.body().getId() == 0) {
-                        Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_recommend_attendant_failed),Toast.LENGTH_SHORT).show();
+        if (MODE_UPDATE.equals(currentMode)) {
+            Call<Attendant> call = recommendService.updateAttendant(String.format("%s %s",getString(R.string.text_prefix_token),token),
+                    new Attendant(name,sexNumber,birthday,mobile));
+            call.enqueue(new Callback<Attendant>() {
+                @Override
+                public void onResponse(Call<Attendant> call, Response<Attendant> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        if (response.body() == null) {
+                            Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_change_attendant_info_failed),Toast.LENGTH_SHORT).show();
+                        }else {
+                            if (response.body().getId() == 0) {
+                                Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_change_attendant_info_failed),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_change_attendant_info_succeed),Toast.LENGTH_SHORT).show();
+                                ApplicationBus.getInstance().post(new RefreshEvent());
+                                finish();
+                            }
+                        }
                     }else {
-                        Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_recommend_attendant_succeed),Toast.LENGTH_SHORT).show();
-                        finish();
+                        Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_change_customer_info_failed),Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                }
+
+                @Override
+                public void onFailure(Call<Attendant> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_change_attendant_info_failed),Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else if (MODE_NORMAL.equals(currentMode)) {
+            Call<Attendant> call = recommendService.createAttendant(String.format("%s %s",getString(R.string.text_prefix_token),token),
+                    new Attendant(name,sexNumber,birthday,mobile));
+            call.enqueue(new Callback<Attendant>() {
+                @Override
+                public void onResponse(Call<Attendant> call, Response<Attendant> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        if (response.body().getId() == 0) {
+                            Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_recommend_attendant_failed),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_recommend_attendant_succeed),Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }else {
+                        Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_recommend_attendant_failed),Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Attendant> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_recommend_attendant_failed),Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<Attendant> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(InputAttendantInfoActivity.this,getString(R.string.text_recommend_attendant_failed),Toast.LENGTH_SHORT).show();
-            }
-        });
-
+            });
+        }else {
+            Toast.makeText(this,getString(R.string.text_unknown_error),Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
     }
 
     public void back(View view) {

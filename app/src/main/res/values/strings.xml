@@ -84,11 +84,20 @@
     <string name="text_customer_sex">客户性别：</string>
     <string name="text_customer_birthday">客户出身日期：</string>
     <string name="text_customer_mobile">客户手机号：</string>
+    <string name="text_customer_intent">客户意向：</string>
     <string name="text_attendant_name">护理员姓名：</string>
     <string name="text_attendant_sex">护理员性别：</string>
     <string name="text_attendant_birthday">护理员出身日期：</string>
     <string name="text_attendant_mobile">护理员手机号：</string>
     <string name="text_edit">编辑</string>
+    <string name="text_edit_customer">编辑客户</string>
+    <string name="text_edit_attendant">编辑护理员</string>
+    <string name="text_change_customer_info_failed">修改客户信息失败，请稍后再试</string>
+    <string name="text_change_customer_info_succeed">修改客户信息成功</string>
+    <string name="text_change_attendant_info_failed">修改护理员信息失败，请稍后再试</string>
+    <string name="text_change_attendant_info_succeed">修改护理员信息成功</string>
+    <string name="text_not_support_edit_user_info">暂不支持用户自主修改个人信息，如果需要帮助请与我们联系</string>
+    <string name="text_not_support_edit_mobile">暂不支持修改手机号</string>
     <string-array name="array_sex">
         <item>男</item>
         <item>女</item>

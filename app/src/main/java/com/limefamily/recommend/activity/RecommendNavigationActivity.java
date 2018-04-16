@@ -54,7 +54,9 @@ public class RecommendNavigationActivity extends AppCompatActivity {
             menuOneView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(RecommendNavigationActivity.this,InputAttendantInfoActivity.class));
+                    Intent intent = new Intent(RecommendNavigationActivity.this,InputAttendantInfoActivity.class);
+                    intent.putExtra(InputAttendantInfoActivity.KEY_MODE,InputAttendantInfoActivity.MODE_NORMAL);
+                    startActivity(intent);
                 }
             });
             menuSecondView.setOnClickListener(new View.OnClickListener() {

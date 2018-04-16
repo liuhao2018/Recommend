@@ -1,6 +1,7 @@
 package com.limefamily.recommend.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.limefamily.recommend.R;
+import com.limefamily.recommend.activity.InputAttendantInfoActivity;
 import com.limefamily.recommend.model.Attendant;
 import com.limefamily.recommend.util.FormatUtil;
 
@@ -48,7 +50,7 @@ public class RecommendAttendantAdapter extends RecyclerView.Adapter<RecommendAtt
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Attendant attendant = attendants.get(position);
+        final Attendant attendant = attendants.get(position);
         if (attendant != null ) {
             String createdDate = attendant.getCreated_at();
             if (!TextUtils.isEmpty(createdDate)) {
@@ -80,6 +82,18 @@ public class RecommendAttendantAdapter extends RecyclerView.Adapter<RecommendAtt
             if (!TextUtils.isEmpty(mobile)) {
                 holder.attendantMobileTextView.setText(mobile);
             }
+            holder.attendantEditedTextView.setVisibility(View.VISIBLE);
+            holder.attendantEditedTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,InputAttendantInfoActivity.class);
+                    intent.putExtra(InputAttendantInfoActivity.KEY_MODE,InputAttendantInfoActivity.MODE_UPDATE);
+                    intent.putExtra(InputAttendantInfoActivity.KEY_MODEL,attendant);
+                    context.startActivity(intent);
+                }
+            });
+        }else {
+            holder.attendantEditedTextView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -90,6 +104,7 @@ public class RecommendAttendantAdapter extends RecyclerView.Adapter<RecommendAtt
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView attendantEditedTextView;
         TextView attendantSexTextView;
         TextView attendantNameTextView;
         TextView attendantMobileTextView;
@@ -99,6 +114,7 @@ public class RecommendAttendantAdapter extends RecyclerView.Adapter<RecommendAtt
 
         public ViewHolder(View itemView) {
             super(itemView);
+            attendantEditedTextView = itemView.findViewById(R.id.tv_edit_attendant);
             attendantSexTextView = itemView.findViewById(R.id.tv_attendant_sex);
             attendantNameTextView = itemView.findViewById(R.id.tv_attendant_name);
             attendantMobileTextView = itemView.findViewById(R.id.tv_attendant_mobile);
