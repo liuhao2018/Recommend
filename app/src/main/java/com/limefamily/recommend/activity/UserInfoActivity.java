@@ -148,7 +148,7 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
                     }else {
                         rebateIncomeTextView.setVisibility(View.VISIBLE);
                         rebateCountTextView.setVisibility(View.VISIBLE);
-                        rebateIncomeTextView.setText(String.format("%d%s",response.body().getAmount(),getString(R.string.text_money_unit)));
+                        rebateIncomeTextView.setText(String.format("%d%s",response.body().getAmount()/100,getString(R.string.text_money_unit)));
                         rebateCountTextView.setText(String.format("%d%s",response.body().getCount(),getString(R.string.text_count_unit)));
                     }
                 }else {

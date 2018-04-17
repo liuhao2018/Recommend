@@ -21,6 +21,7 @@ import com.limefamily.recommend.adapter.RebateListAdapter;
 import com.limefamily.recommend.logic.ApplicationBus;
 import com.limefamily.recommend.logic.FragmentPageChangeEvent;
 import com.limefamily.recommend.model.Rebate;
+import com.limefamily.recommend.model.RebateResponseModel;
 import com.limefamily.recommend.restful.RebateService;
 import com.limefamily.recommend.widget.GoogleCircleProgressView;
 import com.squareup.otto.Subscribe;
@@ -68,9 +69,12 @@ public class RebateFragment extends Fragment implements OnRefreshListener,OnLoad
         GoogleCircleProgressView footerGoogleCircleProgressView = footerView.findViewById(R.id.googleProgress);
         footerGoogleCircleProgressView.setColorSchemeResources(R.color.app_default);
         swipeToLoadLayout = view.findViewById(R.id.swipeToLoadLayout);
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
         recyclerView = view.findViewById(R.id.swipe_target);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rebateListAdapter = new RebateListAdapter(getActivity());
+        recyclerView.setAdapter(rebateListAdapter);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -107,7 +111,7 @@ public class RebateFragment extends Fragment implements OnRefreshListener,OnLoad
     @Subscribe
     public void subscibe(FragmentPageChangeEvent fragmentPageChangeEvent) {
         currentRebateType = fragmentPageChangeEvent.getPosition();
-        fetchRebateList();
+        onRefresh();
     }
 
     @Override
@@ -135,7 +139,7 @@ public class RebateFragment extends Fragment implements OnRefreshListener,OnLoad
         }
         Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();
         RebateService rebateService = retrofit.create(RebateService.class);
-        Call<List<Rebate>> call;
+        Call<List<RebateResponseModel>> call;
         if (currentRebateType == TYPE_CUSTOMER) {
             call = rebateService.rebateList(String.format("%s %s", getString(R.string.text_prefix_token), token),
                     customerPage, DEFAULT_PAGE_SIZE, getString(R.string.text_from_time_default), currentRebateType);
@@ -143,9 +147,9 @@ public class RebateFragment extends Fragment implements OnRefreshListener,OnLoad
             call = rebateService.rebateList(String.format("%s %s", getString(R.string.text_prefix_token), token),
                     attendantPage, DEFAULT_PAGE_SIZE, getString(R.string.text_from_time_default), currentRebateType);
         }
-        call.enqueue(new Callback<List<Rebate>>() {
+        call.enqueue(new Callback<List<RebateResponseModel>>() {
             @Override
-            public void onResponse(Call<List<Rebate>> call, Response<List<Rebate>> response) {
+            public void onResponse(Call<List<RebateResponseModel>> call, Response<List<RebateResponseModel>> response) {
                 completeRefresh();
                 if (response.isSuccessful()) {
                     if (response.body() == null) {
@@ -181,7 +185,7 @@ public class RebateFragment extends Fragment implements OnRefreshListener,OnLoad
             }
 
             @Override
-            public void onFailure(Call<List<Rebate>> call, Throwable t) {
+            public void onFailure(Call<List<RebateResponseModel>> call, Throwable t) {
                 showError();
                 completeRefresh();
                 swipeToLoadLayout.setLoadingMore(false);

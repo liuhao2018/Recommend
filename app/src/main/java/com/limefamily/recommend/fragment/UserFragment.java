@@ -45,7 +45,7 @@ public class UserFragment extends Fragment implements OnClickListener {
     private final String REPLACE_CONTENT = "****";
     private SimpleDraweeView userHeadImageView;
     private ViewGroup userDescribeViewGroup,userInfo,accountSecure;
-    private TextView loginStatusTextView,userNameTextView,userMobileTextView;
+    private TextView userLoginStatusTextView,userNameTextView,userMobileTextView;
 
     private final int REQUEST_INTENT_LOGIN = 2;
 
@@ -67,7 +67,7 @@ public class UserFragment extends Fragment implements OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loginStatusTextView = view.findViewById(R.id.tv_login_status);
+        userLoginStatusTextView = view.findViewById(R.id.tv_login_status);
         userHeadImageView = view.findViewById(R.id.iv_user_head);
         userNameTextView = view.findViewById(R.id.tv_user_name);
         userMobileTextView = view.findViewById(R.id.tv_user_mobile);
@@ -79,9 +79,10 @@ public class UserFragment extends Fragment implements OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        userHeadImageView.setOnClickListener(this);
         userInfo.setOnClickListener(this);
         accountSecure.setOnClickListener(this);
-        loginStatusTextView.setOnClickListener(new OnClickListener() {
+        userLoginStatusTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleLoginOrLogout();
@@ -161,7 +162,7 @@ public class UserFragment extends Fragment implements OnClickListener {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    loginStatusTextView.setText(getString(R.string.text_logout));
+                    userLoginStatusTextView.setText(getString(R.string.text_logout));
                     if (response.body() != null) {
                         String userHead = response.body().getAvatar();
                         if (!TextUtils.isEmpty(userHead)) {
@@ -199,7 +200,7 @@ public class UserFragment extends Fragment implements OnClickListener {
     }
 
     private void updateLogoutView() {
-        loginStatusTextView.setText(getString(R.string.text_login));
+        userLoginStatusTextView.setText(getString(R.string.text_login));
         userHeadImageView.setImageResource(R.mipmap.icon_user_head_default);
         userDescribeViewGroup.setVisibility(View.INVISIBLE);
     }
@@ -212,6 +213,7 @@ public class UserFragment extends Fragment implements OnClickListener {
             return;
         }
         switch (v.getId()) {
+            case R.id.iv_user_head:
             case R.id.rl_user_info:
                 startActivity(new Intent(getActivity(), UserInfoActivity.class));
                 break;

@@ -10,7 +10,7 @@ public class Rebate {
     private int object_id;
     private int because;
     private int amount;
-    private int status;
+    private String status;
     private int settlement_id;
     private int created_by;
     private int updated_by;
@@ -20,7 +20,7 @@ public class Rebate {
     public Rebate() {
     }
 
-    public Rebate(int id, int type, int object_id, int because, int amount, int status, int settlement_id, int created_by, int updated_by, String created_at, String updated_at) {
+    public Rebate(int id, int type, int object_id, int because, int amount, String status, int settlement_id, int created_by, int updated_by, String created_at, String updated_at) {
         this.id = id;
         this.type = type;
         this.object_id = object_id;
@@ -74,11 +74,11 @@ public class Rebate {
         this.amount = amount;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

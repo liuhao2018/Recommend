@@ -2,6 +2,7 @@ package com.limefamily.recommend.restful;
 
 import com.limefamily.recommend.model.Income;
 import com.limefamily.recommend.model.Rebate;
+import com.limefamily.recommend.model.RebateResponseModel;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface RebateService {
     Call<Income> income(@Header("Authorization") String authorization,@Query("from_time") String from_time);
 
     @GET("/rebate/rebate-list")
-    Call<List<Rebate>> rebateList(@Header("Authorization") String authorization,@Query("page") int page,@Query("page_size") int page_size,@Query("from_time") String from_time,@Query("type") int type);
+    Call<List<RebateResponseModel>> rebateList(@Header("Authorization") String authorization, @Query("page") int page, @Query("page_size") int page_size, @Query("from_time") String from_time, @Query("type") int type);
 }

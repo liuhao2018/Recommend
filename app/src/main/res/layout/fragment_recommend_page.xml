@@ -8,16 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
-        android:background="#fff">
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:textColor="#333"
-            android:layout_marginLeft="10dp"
             android:text="@string/title_recommend"
-            android:textSize="19dp"/>
+            android:textSize="17sp"/>
 
     </LinearLayout>
 
@@ -32,7 +32,7 @@
         android:layout_height="60dp"
         android:background="#ffffff"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="20dp">
 
         <TextView
             android:id="@+id/tv_create_recommend"
@@ -64,7 +64,7 @@
         android:layout_height="60dp"
         android:background="#ffffff"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="20dp">
 
         <TextView
             android:id="@+id/tv_recommend_list"
@@ -93,7 +93,7 @@
         android:layout_height="60dp"
         android:background="#ffffff"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"

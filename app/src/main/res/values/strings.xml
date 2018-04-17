@@ -104,6 +104,8 @@
     <string name="text_money_unit">元</string>
     <string name="text_count_unit">次</string>
     <string name="text_from_time_default">1970-01-01</string>
+    <string name="text_rebate_type">推荐类型</string>
+    <string name="text_recommend_name">被推荐人</string>
     <string-array name="array_sex">
         <item>男</item>
         <item>女</item>

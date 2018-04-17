@@ -43,7 +43,7 @@
         android:layout_height="60dp"
         android:background="#ffffff"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="20dp">
 
         <TextView
             android:id="@+id/tv_menu_one"
@@ -74,7 +74,7 @@
         android:layout_height="60dp"
         android:background="#ffffff"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="20dp">
 
         <TextView
             android:id="@+id/tv_menu_second"
