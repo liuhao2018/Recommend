@@ -28,11 +28,12 @@ public class User implements Serializable {
     private String updated_at;
     private List<String> ext_attr;
     private String token;
+    private String birthday;
 
     public User() {
     }
 
-    public User(int id, String serial_number, String name, int sex, String id_number, String mobile, String email, String avatar, int address_id, int active, String remark, int created_by, int updated_by, String created_at, String updated_at, List<String> ext_attr,String token) {
+    public User(int id, String serial_number, String name, int sex, String id_number, String mobile, String email, String avatar, int address_id, int active, String remark, int created_by, int updated_by, String created_at, String updated_at, List<String> ext_attr,String token,String birthday) {
         this.id = id;
         this.serial_number = serial_number;
         this.name = name;
@@ -50,6 +51,7 @@ public class User implements Serializable {
         this.updated_at = updated_at;
         this.ext_attr = ext_attr;
         this.token = token;
+        this.birthday = birthday;
     }
 
     public int getId() {
@@ -188,6 +190,14 @@ public class User implements Serializable {
         this.token = token;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -208,6 +218,7 @@ public class User implements Serializable {
                 ", updated_at='" + updated_at + '\'' +
                 ", ext_attr=" + ext_attr +
                 ", token='" + token + '\'' +
+                ", birthday='" + birthday + '\'' +
                 '}';
     }
 }

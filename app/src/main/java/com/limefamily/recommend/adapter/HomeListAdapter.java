@@ -1,6 +1,5 @@
 package com.limefamily.recommend.adapter;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.limefamily.recommend.R;
 import com.limefamily.recommend.model.Hot;
 import com.limefamily.recommend.model.News;
+import com.yarolegovich.discretescrollview.DSVOrientation;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,14 +44,14 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_home_header,null);
             return new HeaderViewHolder(view);
         }
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_hot_recommend,null);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_hot,null);
         return new NormalViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderViewHolder) {
-            ((HeaderViewHolder) holder).adapter.setData(newsList);
+            ((HeaderViewHolder) holder).setData(newsList);
         }else if (holder instanceof NormalViewHolder) {
             ((NormalViewHolder) holder).tvTitle.setText(hotList.get(position - 1).getTitle());
             ((NormalViewHolder) holder).tvDesc.setText(hotList.get(position - 1).getDesc());
@@ -71,23 +75,26 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        RecyclerView recyclerView;
-        List<News> newsList;
-        NewsAdapter adapter;
+        DiscreteScrollView scrollView;
+        InfiniteScrollAdapter infiniteAdapter;
+        List<News> newsList = new ArrayList<>();
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            recyclerView = itemView.findViewById(R.id.recycler_view);
-            LinearLayoutManager manager = new LinearLayoutManager(itemView.getContext());
-            manager.setOrientation(RecyclerView.HORIZONTAL);
-            recyclerView.setLayoutManager(manager);
-            adapter = new NewsAdapter();
-            recyclerView.setAdapter(adapter);
+            scrollView = itemView.findViewById(R.id.scroll_view);
+            scrollView.setOrientation(DSVOrientation.HORIZONTAL);
+            infiniteAdapter = InfiniteScrollAdapter.wrap(new NewsAdapter(newsList));
+            scrollView.setAdapter(infiniteAdapter);
+            scrollView.setItemTransitionTimeMillis(150);
+            scrollView.setItemTransformer(new ScaleTransformer.Builder()
+                    .setMinScale(0.8f)
+                    .build());
         }
 
         public void setData(List<News> newsList) {
             this.newsList = newsList;
-            adapter.notifyDataSetChanged();
+            infiniteAdapter.notifyDataSetChanged();
         }
+
     }
 
     class NormalViewHolder extends RecyclerView.ViewHolder {

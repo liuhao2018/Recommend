@@ -21,10 +21,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private List<News> newsList;
 
-    public void setData(List<News> newsList) {
+    public NewsAdapter(List<News> newsList) {
         this.newsList = newsList;
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

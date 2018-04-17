@@ -23,6 +23,7 @@ import com.limefamily.recommend.activity.LoginActivity;
 import com.limefamily.recommend.activity.UserInfoActivity;
 import com.limefamily.recommend.model.User;
 import com.limefamily.recommend.restful.UserService;
+import com.limefamily.recommend.util.FormatUtil;
 import com.limefamily.recommend.util.SPUtil;
 
 import retrofit2.Call;
@@ -40,9 +41,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class UserFragment extends Fragment implements OnClickListener {
 
-    private final int SPLIT_START = 3;
-    private final int SPLIT_END = 7;
-    private final String REPLACE_CONTENT = "****";
     private SimpleDraweeView userHeadImageView;
     private ViewGroup userDescribeViewGroup,userInfo,accountSecure;
     private TextView userLoginStatusTextView,userNameTextView,userMobileTextView;
@@ -175,14 +173,7 @@ public class UserFragment extends Fragment implements OnClickListener {
                         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(mobile)) {
                             userDescribeViewGroup.setVisibility(View.VISIBLE);
                             userNameTextView.setText(name);
-                            try {
-                                StringBuilder stringBuilder = new StringBuilder(mobile);
-                                stringBuilder.replace(SPLIT_START,SPLIT_END, REPLACE_CONTENT);
-                                userMobileTextView.setText(stringBuilder.toString());
-                            }catch (Exception e) {
-                                e.printStackTrace();
-                                userMobileTextView.setText(getString(R.string.text_empty));
-                            }
+                            userMobileTextView.setText(FormatUtil.getInstance().formatMobile(mobile));
                         }
                     }else {
                         Toast.makeText(getActivity(),getString(R.string.text_fetch_user_info_failed),Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package com.limefamily.recommend.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.limefamily.recommend.model.Income;
 import com.limefamily.recommend.model.User;
 import com.limefamily.recommend.restful.RebateService;
 import com.limefamily.recommend.restful.UserService;
+import com.limefamily.recommend.util.FormatUtil;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -39,7 +41,7 @@ import retrofit2.Retrofit;
 
 public class UserInfoActivity extends TakePhotoActivity implements View.OnClickListener {
 
-    private TextView userNameTextView,userSexTextView,userBirthdayTextView,
+    private TextView userNameTextView,userSexTextView,userBirthdayTextView,userMobileTextView,
             rebateIncomeTextView,rebateCountTextView;
     private SimpleDraweeView userHeadImageView;
     private TimePickerView timePickerView;
@@ -57,6 +59,7 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
     }
 
     private void initView() {
+        userMobileTextView = findViewById(R.id.tv_user_mobile);
         userNameTextView = findViewById(R.id.tv_user_name);
         userHeadImageView = findViewById(R.id.iv_user_head);
         userSexTextView = findViewById(R.id.tv_user_sex);
@@ -68,6 +71,8 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
         View userNameView = findViewById(R.id.rl_user_name);
         View userSexView = findViewById(R.id.rl_user_sex);
         View userBirthdayView = findViewById(R.id.rl_user_birthday);
+        View userMobileView = findViewById(R.id.rl_user_mobile);
+        userMobileView.setOnClickListener(this);
         userHeadView.setOnClickListener(this);
         userNameView.setOnClickListener(this);
         userSexView.setOnClickListener(this);
@@ -117,13 +122,19 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
         }
         if (!TextUtils.isEmpty(user.getName())) {
             userNameTextView.setText(user.getName());
-        }
-        if (user.getSex() == 1) {
-            userSexTextView.setText(getString(R.string.text_sex_man));
-        }else if (user.getSex() == 2) {
-            userSexTextView.setText(getString(R.string.text_sex_woman));
         }else {
-            userSexTextView.setText(getString(R.string.text_empty));
+            userNameTextView.setText(getString(R.string.text_unknown));
+        }
+        userSexTextView.setText(FormatUtil.getInstance().formatSex(user.getSex()));
+        if (!TextUtils.isEmpty(user.getBirthday())) {
+            userBirthdayTextView.setText(user.getBirthday());
+        }else {
+            userBirthdayTextView.setText(getString(R.string.text_unknown));
+        }
+        if (!TextUtils.isEmpty(user.getMobile())) {
+            userMobileTextView.setText(FormatUtil.getInstance().formatMobile(user.getMobile()));
+        }else {
+            userMobileTextView.setText(getString(R.string.text_unknown));
         }
     }
 
@@ -170,18 +181,19 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_user_head:
-                handleSelectUserHead();
-                break;
+//                handleSelectUserHead();
+
             case R.id.rl_user_name:
-                Toast.makeText(this,getString(R.string.text_not_support_edit_user_info),Toast.LENGTH_SHORT).show();
 //                handleInputUserName();
-                break;
+
+            case R.id.rl_user_mobile:
+
             case R.id.rl_user_sex:
-                Toast.makeText(this,getString(R.string.text_not_support_edit_user_info),Toast.LENGTH_SHORT).show();
 //                handleInputUserSex();
-                break;
+
             case R.id.rl_user_birthday:
-                handleInputUserBirthday();
+//                handleInputUserBirthday();
+                Toast.makeText(this,getString(R.string.text_not_support_edit_user_info),Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -309,6 +321,10 @@ public class UserInfoActivity extends TakePhotoActivity implements View.OnClickL
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String dataStr = format.format(date);
         return dataStr;
+    }
+
+    public void goRebateList(View view) {
+        startActivity(new Intent(this,RebateActivity.class));
     }
 
     public void back(View view) {
