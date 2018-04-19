@@ -8,9 +8,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.limefamily.recommend.R;
+import com.limefamily.recommend.RecommendApplication;
 import com.limefamily.recommend.adapter.HomeListAdapter;
+import com.limefamily.recommend.model.HomeResponse;
+import com.limefamily.recommend.restful.NewsService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  *
@@ -44,29 +53,27 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new HomeListAdapter();
-//        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        Retrofit retrofit = RecommendApplication.getRetrofit();
-//        NewsService service = retrofit.create(NewsService.class);
-//        Call<HomeResponse> call = service.fetchHome();
-//        call.enqueue(new Callback<HomeResponse>() {
-//            @Override
-//            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
-//                if (response.isSuccessful()) {
-//                    adapter.setData(response.body().getNews(),response.body().getHot());
-//                }else {
-//                    Toast.makeText(context,context.getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HomeResponse> call, Throwable t) {
-//                Toast.makeText(context,context.getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();
+        NewsService service = retrofit.create(NewsService.class);
+        Call<HomeResponse> call = service.fetchHome();
+        call.enqueue(new Callback<HomeResponse>() {
+            @Override
+            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                if (response.isSuccessful()) {
+                    adapter.setData(response.body().getNews(), response.body().getHot());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomeResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -42,7 +42,7 @@ import static android.app.Activity.RESULT_OK;
 public class UserFragment extends Fragment implements OnClickListener {
 
     private SimpleDraweeView userHeadImageView;
-    private ViewGroup userDescribeViewGroup,userInfo,accountSecure;
+    private ViewGroup userDescribeViewGroup, userInfoViewGroup, accountSecureViewGroup;
     private TextView userLoginStatusTextView,userNameTextView,userMobileTextView;
 
     private final int REQUEST_INTENT_LOGIN = 2;
@@ -70,16 +70,16 @@ public class UserFragment extends Fragment implements OnClickListener {
         userNameTextView = view.findViewById(R.id.tv_user_name);
         userMobileTextView = view.findViewById(R.id.tv_user_mobile);
         userDescribeViewGroup = view.findViewById(R.id.ll_user_desc);
-        userInfo = view.findViewById(R.id.rl_user_info);
-        accountSecure = view.findViewById(R.id.rl_account_secure);
+        userInfoViewGroup = view.findViewById(R.id.rl_user_info);
+        accountSecureViewGroup = view.findViewById(R.id.rl_account_secure);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         userHeadImageView.setOnClickListener(this);
-        userInfo.setOnClickListener(this);
-        accountSecure.setOnClickListener(this);
+        userInfoViewGroup.setOnClickListener(this);
+        accountSecureViewGroup.setOnClickListener(this);
         userLoginStatusTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

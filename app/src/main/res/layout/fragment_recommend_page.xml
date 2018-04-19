@@ -21,98 +21,140 @@
 
     </LinearLayout>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#f5f5f5"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:paddingTop="200dp"
+        android:background="@mipmap/icon_recommend_bg">
 
-    <RelativeLayout
-        android:id="@+id/rl_recommend_customer"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#ffffff"
-        android:paddingLeft="10dp"
-        android:paddingRight="20dp">
-
-        <TextView
-            android:id="@+id/tv_create_recommend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="15sp"
-            android:layout_centerVertical="true"
-            android:text="@string/text_customer"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_mine_arrow"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
-
-        <View
+        <RelativeLayout
+            android:id="@+id/rl_recommend_customer"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="#e1e1e1"/>
+            android:layout_height="65dp"
+            android:background="#ffffff"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_icon1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/icon_recommend1"
+                android:layout_centerVertical="true"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_recommend_attendant"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#ffffff"
-        android:paddingLeft="10dp"
-        android:paddingRight="20dp">
+            <TextView
+                android:id="@+id/tv_create_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_icon1"
+                android:layout_marginLeft="24dp"
+                android:textColor="#333333"
+                android:textSize="17sp"
+                android:layout_centerVertical="true"
+                android:text="@string/text_customer"/>
 
-        <TextView
-            android:id="@+id/tv_recommend_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="15sp"
-            android:layout_centerVertical="true"
-            android:text="@string/text_attendant"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_mine_arrow"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
-        <View
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_mine_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@mipmap/icon_recommend_line"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_recommend_attendant"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#e1e1e1"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+            android:layout_height="65dp"
+            android:background="#ffffff"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
-    <RelativeLayout
-        android:id="@+id/rl_rebate"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#ffffff"
-        android:paddingLeft="10dp"
-        android:paddingRight="20dp">
+            <ImageView
+                android:id="@+id/iv_icon2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/icon_recommend2"
+                android:layout_centerVertical="true"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="15sp"
-            android:layout_centerVertical="true"
-            android:text="@string/text_rebate"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_mine_arrow"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
-        <View
+            <TextView
+                android:id="@+id/tv_recommend_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_icon2"
+                android:textColor="#333333"
+                android:textSize="17sp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:text="@string/text_attendant"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_mine_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@mipmap/icon_recommend_line"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_rebate"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#e1e1e1"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+            android:layout_height="65dp"
+            android:background="#ffffff"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:id="@+id/iv_icon3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/icon_recommend3"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_icon3"
+                android:layout_marginLeft="24dp"
+                android:textColor="#333333"
+                android:textSize="17sp"
+                android:layout_centerVertical="true"
+                android:text="@string/text_rebate"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_mine_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@mipmap/icon_recommend_line"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

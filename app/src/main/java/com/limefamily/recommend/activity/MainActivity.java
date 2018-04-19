@@ -4,7 +4,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.limefamily.recommend.R;
@@ -16,79 +15,72 @@ import com.limefamily.recommend.adapter.AppPagerAdapter;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private ViewPager viewPager;
-    private ImageView ivHome,ivCare,ivMine;
+    private final int TAB_HOME = 0;
+    private final int TAB_USER = 2;
+    private final int TAB_RECOMMEND = 1;
+
+    private ViewPager mainViewPager;
     private AppPagerAdapter appPagerAdapter;
-    private ViewGroup btnHome,btnCare,btnMine;
+    private View homeTabView,recommendTabView,userTabView;
+    private ImageView homeTabImageView,recommendTabImageView,userTabImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        initView();
-    }
-
-    private void initView() {
-        btnHome = findViewById(R.id.ll_home);
-        btnCare = findViewById(R.id.ll_care);
-        btnMine = findViewById(R.id.ll_mine);
-        ivHome = findViewById(R.id.iv_home);
-        ivCare = findViewById(R.id.iv_care);
-        ivMine = findViewById(R.id.iv_mine);
-        viewPager = findViewById(R.id.view_pager);
+        homeTabView = findViewById(R.id.ll_home);
+        recommendTabView = findViewById(R.id.ll_care);
+        userTabView = findViewById(R.id.ll_mine);
+        homeTabImageView = findViewById(R.id.iv_home);
+        recommendTabImageView = findViewById(R.id.iv_care);
+        userTabImageView = findViewById(R.id.iv_mine);
+        mainViewPager = findViewById(R.id.view_pager);
         appPagerAdapter = new AppPagerAdapter(getSupportFragmentManager());
-        btnHome.setOnClickListener(new View.OnClickListener() {
+        homeTabView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(0,false);
-                updateView(0);
+                handleTabClick(TAB_HOME);
             }
         });
-        btnCare.setOnClickListener(new View.OnClickListener() {
+        recommendTabView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(1,false);
-                updateView(1);
+                handleTabClick(TAB_RECOMMEND);
             }
         });
-        btnMine.setOnClickListener(new View.OnClickListener() {
+        userTabView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(2,false);
-                updateView(2);
+                handleTabClick(TAB_USER);
             }
         });
-        viewPager.setAdapter(appPagerAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
+        mainViewPager.setAdapter(appPagerAdapter);
+        mainViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
+                super.onPageSelected(position);
                 updateView(position);
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
         });
-        updateView(0);
+
+        updateView(TAB_HOME);
+    }
+
+    private void handleTabClick(int tab) {
+        mainViewPager.setCurrentItem(tab,false);
+        updateView(tab);
     }
 
     private void updateView(int position) {
-        ivHome.setImageResource(R.mipmap.icon_home_normal);
-        ivCare.setImageResource(R.mipmap.icon_care_normal);
-        ivMine.setImageResource(R.mipmap.icon_mine_normal);
-        if (position == 0 ) {
-            ivHome.setImageResource(R.mipmap.icon_home_select);
-        }else if (position == 1) {
-            ivCare.setImageResource(R.mipmap.icon_care_select);
-        }else  {
-            ivMine.setImageResource(R.mipmap.icon_mine_select);
+        homeTabImageView.setImageResource(R.mipmap.icon_home_normal);
+        recommendTabImageView.setImageResource(R.mipmap.icon_care_normal);
+        userTabImageView.setImageResource(R.mipmap.icon_mine_normal);
+        if (position == TAB_HOME ) {
+            homeTabImageView.setImageResource(R.mipmap.icon_home_select);
+        }else if (position == TAB_RECOMMEND) {
+            recommendTabImageView.setImageResource(R.mipmap.icon_care_select);
+        }else if (position == TAB_USER) {
+            userTabImageView.setImageResource(R.mipmap.icon_mine_select);
         }
     }
 }

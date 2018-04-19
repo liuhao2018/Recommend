@@ -9,6 +9,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.limefamily.recommend.R;
 import com.limefamily.recommend.model.News;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +22,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private List<News> newsList;
 
-    public NewsAdapter(List<News> newsList) {
-        this.newsList = newsList;
+    public NewsAdapter() {
+        this.newsList = new ArrayList<>();
+    }
+
+    public void setData(List<News> newsList) {
+        this.newsList.addAll(newsList);
     }
 
     @Override
@@ -33,9 +38,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.ivImage.setImageURI(newsList.get(position).getCover());
-        holder.tvTitle.setText(newsList.get(position).getTitle());
-        holder.tvDate.setText(newsList.get(position).getDate());
+        holder.coverImageView.setImageURI(newsList.get(position).getCover());
+        holder.titleTextView.setText(newsList.get(position).getTitle());
+        holder.dateTextView.setText(newsList.get(position).getDate());
     }
 
     @Override
@@ -45,15 +50,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        SimpleDraweeView ivImage;
-        TextView tvTitle;
-        TextView tvDate;
+        TextView titleTextView;
+        TextView dateTextView;
+        SimpleDraweeView coverImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ivImage = itemView.findViewById(R.id.iv_img);
-            tvTitle = itemView.findViewById(R.id.tv_title);
-            tvDate = itemView.findViewById(R.id.tv_date);
+            coverImageView = itemView.findViewById(R.id.iv_img);
+            titleTextView = itemView.findViewById(R.id.tv_title);
+            dateTextView = itemView.findViewById(R.id.tv_date);
         }
     }
 }

@@ -26,16 +26,17 @@ import java.util.List;
 
 public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<News> newsList;
-    private List<Hot> hotList;
-
-    public void setData(List<News> newsList,List<Hot> hotList) {
-        this.newsList = newsList;
-        this.hotList = hotList;
-    }
-
     private static final int ITEM_NEWS = 1001;
     private static final int ITEM_HOT = 1002;
+
+    private List<News> newsList = new ArrayList<>();
+    private List<Hot> hotList = new ArrayList<>();
+
+    public void setData(List<News> newsList,List<Hot> hotList) {
+        this.newsList.addAll(newsList);
+        this.hotList.addAll(hotList);
+        notifyDataSetChanged();
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,17 +54,24 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof HeaderViewHolder) {
             ((HeaderViewHolder) holder).setData(newsList);
         }else if (holder instanceof NormalViewHolder) {
-            ((NormalViewHolder) holder).tvTitle.setText(hotList.get(position - 1).getTitle());
-            ((NormalViewHolder) holder).tvDesc.setText(hotList.get(position - 1).getDesc());
-            ((NormalViewHolder) holder).tvDate.setText(hotList.get(position - 1).getDate());
-            ((NormalViewHolder) holder).ivImage.setImageURI(hotList.get(position - 1).getCover());
+            ((NormalViewHolder) holder).titleTextView.setText(hotList.get(position - 1).getTitle());
+            ((NormalViewHolder) holder).describeTextView.setText(hotList.get(position - 1).getDesc());
+            ((NormalViewHolder) holder).dateTextView.setText(hotList.get(position - 1).getDate());
+            ((NormalViewHolder) holder).coverImageView.setImageURI(hotList.get(position - 1).getCover());
         }
     }
 
-
     @Override
     public int getItemCount() {
-        return hotList.size() + 1;
+        if (newsList.size() == 0 && hotList.size() == 0) {
+            return 0;
+        }
+        else if (newsList.size() == 0 && hotList.size() > 0 ) {
+            return hotList.size();
+        }
+        else {
+            return 1;
+        }
     }
 
     @Override
@@ -75,14 +83,16 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
+
         DiscreteScrollView scrollView;
         InfiniteScrollAdapter infiniteAdapter;
         List<News> newsList = new ArrayList<>();
+
         public HeaderViewHolder(View itemView) {
             super(itemView);
             scrollView = itemView.findViewById(R.id.scroll_view);
             scrollView.setOrientation(DSVOrientation.HORIZONTAL);
-            infiniteAdapter = InfiniteScrollAdapter.wrap(new NewsAdapter(newsList));
+            infiniteAdapter = InfiniteScrollAdapter.wrap(new NewsAdapter());
             scrollView.setAdapter(infiniteAdapter);
             scrollView.setItemTransitionTimeMillis(150);
             scrollView.setItemTransformer(new ScaleTransformer.Builder()
@@ -94,23 +104,21 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.newsList = newsList;
             infiniteAdapter.notifyDataSetChanged();
         }
-
     }
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
 
-         SimpleDraweeView ivImage;
-         TextView tvTitle;
-         TextView tvDesc;
-         TextView tvDate;
+         TextView titleTextView;
+         TextView describeTextView;
+         TextView dateTextView;
+         SimpleDraweeView coverImageView;
 
         public NormalViewHolder(View itemView) {
             super(itemView);
-            ivImage = itemView.findViewById(R.id.iv_img);
-            tvTitle = itemView.findViewById(R.id.tv_title);
-            tvDesc = itemView.findViewById(R.id.tv_desc);
-            tvDate = itemView.findViewById(R.id.tv_date);
+            coverImageView = itemView.findViewById(R.id.iv_img);
+            titleTextView = itemView.findViewById(R.id.tv_title);
+            describeTextView = itemView.findViewById(R.id.tv_desc);
+            dateTextView = itemView.findViewById(R.id.tv_date);
         }
     }
-
 }
