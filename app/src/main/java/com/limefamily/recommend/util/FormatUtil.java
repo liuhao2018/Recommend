@@ -74,14 +74,19 @@ public class FormatUtil {
     }
 
     public String timestamp2DateString(long timestamp) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        if ((timestamp + "").length() == 13) {
-            String date = sdf.format(new Date(timestamp));
-            return date;
-        } else {
-            String date = sdf.format(new Date(timestamp * 1000));
-            return date;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if ((timestamp + "").length() == 13) {
+                String date = sdf.format(new Date(timestamp));
+                return date;
+            } else {
+                String date = sdf.format(new Date(timestamp * 1000));
+                return date;
+            }
+        }catch (Exception e) {
+            return RecommendApplication.getInstance().getString(R.string.text_unknown);
         }
+
     }
 
 }

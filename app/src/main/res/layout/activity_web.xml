@@ -1,93 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:onClick="back">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:titleTextColor="@android:color/white"
-        app:theme="@style/toolBar"
-        app:titleTextColor="@android:color/white">
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_back"/>
 
         <TextView
-            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"/>
-    </android.support.v7.widget.Toolbar>
-
-    <TextView
-        android:id="@+id/tv_news_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#333333"
-        android:textSize="21sp"
-        android:paddingTop="15dp"
-        android:paddingBottom="12dp"
-        android:gravity="center"
-        android:maxLines="2"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/app_default"
-            android:text="@string/text_lime_news"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="12dp"
             android:gravity="center"
-            android:textSize="15sp"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="14dp"
-            android:background="#e4e4e4"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
-            android:layout_centerInParent="true"/>
-
-        <TextView
-            android:id="@+id/tv_news_pub_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="#999999"/>
-
+            android:text="@string/text_back_home"
+            android:textColor="#333333"
+            android:textSize="17sp"/>
 
     </LinearLayout>
 
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/iv_cover"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_height="0.5dp"
+        android:background="#e4e4e4"/>
 
-    <LinearLayout
-        android:id="@+id/container"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 
 </LinearLayout>

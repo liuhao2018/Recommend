@@ -82,10 +82,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activity.EasyWebActivity"
-            android:theme="@style/AppNoActionBarTheme"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleTop"/>
+        <activity android:name=".activity.WebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

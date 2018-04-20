@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.limefamily.recommend.R;
-import com.limefamily.recommend.activity.EasyWebActivity;
+import com.limefamily.recommend.activity.WebActivity;
 import com.limefamily.recommend.model.News;
-import com.limefamily.recommend.util.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +48,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(holder.itemView.getContext(), EasyWebActivity.class);
-                intent.putExtra(EasyWebActivity.KEY_NEWS_ID,newsList.get(position).getNews_id());
+                Intent intent = new Intent(holder.itemView.getContext(), WebActivity.class);
+                intent.putExtra(WebActivity.KEY_NEWS_ID,newsList.get(position).getNews_id());
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -71,7 +70,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             super(itemView);
             coverImageView = itemView.findViewById(R.id.iv_image);
             titleTextView = itemView.findViewById(R.id.tv_desc);
-            dateTextView = itemView.findViewById(R.id.tv_pub_time);
         }
     }
 }

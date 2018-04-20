@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#ffffff">
 
@@ -18,7 +19,8 @@
             android:layout_width="141dp"
             android:layout_height="91dp"
             android:scaleType="centerCrop"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginRight="8dp"
+            app:roundedCornerRadius="5dp"/>
 
         <TextView
             android:id="@+id/tv_title"

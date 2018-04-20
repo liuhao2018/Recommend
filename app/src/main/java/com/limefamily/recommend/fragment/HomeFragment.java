@@ -3,6 +3,7 @@ package com.limefamily.recommend.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,12 +31,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @date 2018/3/28
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private HomeListAdapter adapter;
-    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
-    private Retrofit retrofit;
+    private NewsService newsService;
     public static final String NEWS_SERVER_ADDRESS = "https://oa.limefamily.cn:8894/";
 
     public HomeFragment() {
@@ -56,7 +57,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        progressBar = view.findViewById(R.id.pb);
+        swipeRefreshLayout = view.findViewById(R.id.refresh_layout);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.app_default));
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new HomeListAdapter();
@@ -66,29 +68,49 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        progressBar.setVisibility(View.VISIBLE);
 
         initNewsRetrofit();
 
-        final NewsService service = retrofit.create(NewsService.class);
-        Call<HomeResponse> firstCall = service.fetchLimeNews("mb-news/list-by-tag",1,110000);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+                onRefresh();
+            }
+        });
+    }
+
+    private void initNewsRetrofit() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(NEWS_SERVER_ADDRESS)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        newsService = retrofit.create(NewsService.class);
+    }
+
+    @Override
+    public void onRefresh() {
+        adapter.clearData();
+        Call<HomeResponse> firstCall = newsService.fetchLimeNews("mb-news/list-by-tag",1,110000);
         firstCall.enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                swipeRefreshLayout.setRefreshing(false);
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getItems().size() > 0 ) {
-                       adapter.setLimeNews(response.body().getItems());
+                        adapter.setLimeNews(response.body().getItems());
                     }
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Call<HomeResponse> secondCall = service.fetchLimeNews("mb-news/list-by-tag",2,110000);
+                            Call<HomeResponse> secondCall = newsService.fetchLimeNews("mb-news/list-by-tag",2,110000);
                             secondCall.enqueue(new Callback<HomeResponse>() {
                                 @Override
                                 public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
-                                    progressBar.setVisibility(View.GONE);
                                     if (response.isSuccessful()) {
-                                        progressBar.setVisibility(View.GONE);
                                         if (response.body() != null && response.body().getItems().size() > 0 ) {
                                             adapter.setHotRecommend(response.body().getItems());
                                         }
@@ -99,7 +121,6 @@ public class HomeFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(Call<HomeResponse> call, Throwable t) {
-                                    progressBar.setVisibility(View.GONE);
                                     Toast.makeText(getActivity(),getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -107,23 +128,15 @@ public class HomeFragment extends Fragment {
                     }).start();
 
                 }else {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getActivity(),getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<HomeResponse> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(getActivity(),getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void initNewsRetrofit() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(NEWS_SERVER_ADDRESS)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
     }
 }

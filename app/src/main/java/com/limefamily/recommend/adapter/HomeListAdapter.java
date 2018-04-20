@@ -2,7 +2,6 @@ package com.limefamily.recommend.adapter;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.limefamily.recommend.R;
-import com.limefamily.recommend.activity.EasyWebActivity;
+import com.limefamily.recommend.activity.WebActivity;
 import com.limefamily.recommend.model.News;
 import com.limefamily.recommend.util.FormatUtil;
 import com.yarolegovich.discretescrollview.DSVOrientation;
@@ -45,6 +44,12 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
+    public void clearData() {
+        newsList.clear();
+        hotList.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -69,8 +74,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((NormalViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(holder.itemView.getContext(), EasyWebActivity.class);
-                    intent.putExtra(EasyWebActivity.KEY_NEWS_ID,hotList.get(position - 1).getNews_id());
+                    Intent intent = new Intent(holder.itemView.getContext(), WebActivity.class);
+                    intent.putExtra(WebActivity.KEY_NEWS_ID,hotList.get(position - 1).getNews_id());
                     holder.itemView.getContext().startActivity(intent);
                 }
             });
