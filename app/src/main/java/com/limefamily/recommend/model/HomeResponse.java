@@ -9,22 +9,27 @@ import java.util.List;
  */
 
 public class HomeResponse {
-    private List<News> news;
-    private List<Hot> hot;
+    private List<News> items;
 
-    public List<News> getNews() {
-        return news;
+    public HomeResponse() {
     }
 
-    public void setNews(List<News> news) {
-        this.news = news;
+    public HomeResponse(List<News> items) {
+        this.items = items;
     }
 
-    public List<Hot> getHot() {
-        return hot;
+    public List<News> getItems() {
+        return items;
     }
 
-    public void setHot(List<Hot> hot) {
-        this.hot = hot;
+    public void setItems(List<News> items) {
+        this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "HomeResponse{" +
+                "items=" + items +
+                '}';
     }
 }

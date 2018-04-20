@@ -152,7 +152,7 @@ public class InputCustomerInfoActivity extends AppCompatActivity {
                 @Override
                 public void onTimeSelect(Date date, View v) {
                     if (date != null) {
-                        String birthday = getTime(date);
+                        String birthday = FormatUtil.getInstance().dateObject2String(date);
                         if (!TextUtils.isEmpty(birthday)) {
                             customerBirthdayTextView.setText(birthday);
                         }
@@ -313,13 +313,6 @@ public class InputCustomerInfoActivity extends AppCompatActivity {
             finish();
             return;
         }
-    }
-
-
-    private String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String dataStr = format.format(date);
-        return dataStr;
     }
 
     public void back(View view) {

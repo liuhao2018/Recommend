@@ -15,9 +15,10 @@ import com.limefamily.recommend.adapter.AppPagerAdapter;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private final int TAB_HOME = 0;
-    private final int TAB_USER = 2;
-    private final int TAB_RECOMMEND = 1;
+    public static final int TAB_HOME = 0;
+    public static final int TAB_USER = 2;
+    public static final int TAB_NUMBER = 3;
+    public static final int TAB_RECOMMEND = 1;
 
     private ViewPager mainViewPager;
     private AppPagerAdapter appPagerAdapter;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mainViewPager.setAdapter(appPagerAdapter);
+        mainViewPager.setOffscreenPageLimit(3);
         mainViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {

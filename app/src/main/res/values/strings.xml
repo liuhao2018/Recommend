@@ -12,6 +12,7 @@
     <string name="text_mine_profile">个人资料</string>
     <string name="text_change_password">密码修改</string>
     <string name="text_request_failed">请求数据失败</string>
+    <string name="text_request_succeed">请求数据成功</string>
     <string name="text_password_manage">密码管理</string>
     <string name="text_input_old_password">请输入旧密码</string>
     <string name="text_input_new_password">请输入新密码</string>
@@ -104,9 +105,11 @@
     <string name="text_money_unit">元</string>
     <string name="text_count_unit">次</string>
     <string name="text_from_time_default">1970-01-01</string>
-    <string name="text_rebate_type">推荐类型</string>
-    <string name="text_recommend_name">被推荐人</string>
+    <string name="text_rebate_type">推荐类型:</string>
+    <string name="text_recommend_name">被推荐人:</string>
     <string name="text_mobile">手机号</string>
+    <string name="text_fatch_news_detail_failed">获取资讯详情失败，请稍后再试</string>
+    <string name="text_lime_news">清檬资讯</string>
     <string name="text_unknown">未知</string>
 
     <string name="pref_key_transition_time" translatable="false">pref_key_transition_time</string>

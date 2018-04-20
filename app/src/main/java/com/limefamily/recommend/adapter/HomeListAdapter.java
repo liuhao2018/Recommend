@@ -1,6 +1,8 @@
 package com.limefamily.recommend.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +10,9 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.limefamily.recommend.R;
-import com.limefamily.recommend.model.Hot;
+import com.limefamily.recommend.activity.EasyWebActivity;
 import com.limefamily.recommend.model.News;
+import com.limefamily.recommend.util.FormatUtil;
 import com.yarolegovich.discretescrollview.DSVOrientation;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
@@ -30,11 +33,15 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int ITEM_HOT = 1002;
 
     private List<News> newsList = new ArrayList<>();
-    private List<Hot> hotList = new ArrayList<>();
+    private List<News> hotList = new ArrayList<>();
 
-    public void setData(List<News> newsList,List<Hot> hotList) {
+    public void setLimeNews(List<News> newsList) {
         this.newsList.addAll(newsList);
-        this.hotList.addAll(hotList);
+        notifyDataSetChanged();
+    }
+
+    public void setHotRecommend(List<News> newsList) {
+        this.hotList.addAll(newsList);
         notifyDataSetChanged();
     }
 
@@ -50,28 +57,29 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeaderViewHolder) {
             ((HeaderViewHolder) holder).setData(newsList);
         }else if (holder instanceof NormalViewHolder) {
-            ((NormalViewHolder) holder).titleTextView.setText(hotList.get(position - 1).getTitle());
-            ((NormalViewHolder) holder).describeTextView.setText(hotList.get(position - 1).getDesc());
-            ((NormalViewHolder) holder).dateTextView.setText(hotList.get(position - 1).getDate());
-            ((NormalViewHolder) holder).coverImageView.setImageURI(hotList.get(position - 1).getCover());
+            ((NormalViewHolder) holder).titleTextView.setText(hotList.get(position - 1).getNews_title());
+            ((NormalViewHolder) holder).describeTextView.setText(hotList.get(position - 1).getNews_abstract());
+            ((NormalViewHolder) holder).dateTextView.setText(FormatUtil.getInstance().
+                    timestamp2DateString(hotList.get(position - 1).getNews_pub_time()));
+            ((NormalViewHolder) holder).coverImageView.setImageURI(hotList.get(position - 1).getNews_img());
+            ((NormalViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(holder.itemView.getContext(), EasyWebActivity.class);
+                    intent.putExtra(EasyWebActivity.KEY_NEWS_ID,hotList.get(position - 1).getNews_id());
+                    holder.itemView.getContext().startActivity(intent);
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        if (newsList.size() == 0 && hotList.size() == 0) {
-            return 0;
-        }
-        else if (newsList.size() == 0 && hotList.size() > 0 ) {
-            return hotList.size();
-        }
-        else {
-            return 1;
-        }
+        return hotList.size() + 1;
     }
 
     @Override
@@ -86,13 +94,14 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         DiscreteScrollView scrollView;
         InfiniteScrollAdapter infiniteAdapter;
-        List<News> newsList = new ArrayList<>();
+        NewsAdapter newsAdapter;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
             scrollView = itemView.findViewById(R.id.scroll_view);
             scrollView.setOrientation(DSVOrientation.HORIZONTAL);
-            infiniteAdapter = InfiniteScrollAdapter.wrap(new NewsAdapter());
+            newsAdapter = new NewsAdapter();
+            infiniteAdapter = InfiniteScrollAdapter.wrap(newsAdapter);
             scrollView.setAdapter(infiniteAdapter);
             scrollView.setItemTransitionTimeMillis(150);
             scrollView.setItemTransformer(new ScaleTransformer.Builder()
@@ -101,7 +110,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         public void setData(List<News> newsList) {
-            this.newsList = newsList;
+            newsAdapter.setData(newsList);
+            newsAdapter.notifyDataSetChanged();
             infiniteAdapter.notifyDataSetChanged();
         }
     }

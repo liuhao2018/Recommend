@@ -19,19 +19,27 @@
             android:textColor="#333333"
             android:textSize="17sp"
             android:text="@string/title_home"/>
-
     </LinearLayout>
 
-    <View
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginBottom="10dp"
-        android:background="#e1e1e1"/>
+        android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/app_default"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
 </LinearLayout>

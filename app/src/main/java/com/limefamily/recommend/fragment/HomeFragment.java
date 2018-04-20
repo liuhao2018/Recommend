@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.limefamily.recommend.BuildConfig;
 import com.limefamily.recommend.R;
 import com.limefamily.recommend.RecommendApplication;
 import com.limefamily.recommend.adapter.HomeListAdapter;
@@ -20,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  *
@@ -29,8 +32,11 @@ import retrofit2.Retrofit;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private HomeListAdapter adapter;
+    private ProgressBar progressBar;
+    private RecyclerView recyclerView;
+    private Retrofit retrofit;
+    public static final String NEWS_SERVER_ADDRESS = "https://oa.limefamily.cn:8894/";
 
     public HomeFragment() {
         super();
@@ -50,6 +56,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressBar = view.findViewById(R.id.pb);
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new HomeListAdapter();
@@ -59,21 +66,64 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Retrofit retrofit = RecommendApplication.getInstance().getRetrofit();
-        NewsService service = retrofit.create(NewsService.class);
-        Call<HomeResponse> call = service.fetchHome();
-        call.enqueue(new Callback<HomeResponse>() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        initNewsRetrofit();
+
+        final NewsService service = retrofit.create(NewsService.class);
+        Call<HomeResponse> firstCall = service.fetchLimeNews("mb-news/list-by-tag",1,110000);
+        firstCall.enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.isSuccessful()) {
-                    adapter.setData(response.body().getNews(), response.body().getHot());
+                    if (response.body() != null && response.body().getItems().size() > 0 ) {
+                       adapter.setLimeNews(response.body().getItems());
+                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Call<HomeResponse> secondCall = service.fetchLimeNews("mb-news/list-by-tag",2,110000);
+                            secondCall.enqueue(new Callback<HomeResponse>() {
+                                @Override
+                                public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                                    progressBar.setVisibility(View.GONE);
+                                    if (response.isSuccessful()) {
+                                        progressBar.setVisibility(View.GONE);
+                                        if (response.body() != null && response.body().getItems().size() > 0 ) {
+                                            adapter.setHotRecommend(response.body().getItems());
+                                        }
+                                    }else {
+                                        Toast.makeText(getActivity(),getString(R.string.text_request_succeed),Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<HomeResponse> call, Throwable t) {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(getActivity(),getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }).start();
+
+                }else {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(),getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<HomeResponse> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(),getString(R.string.text_request_failed),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void initNewsRetrofit() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(NEWS_SERVER_ADDRESS)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 }

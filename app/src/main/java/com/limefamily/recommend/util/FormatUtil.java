@@ -3,6 +3,9 @@ package com.limefamily.recommend.util;
 import com.limefamily.recommend.R;
 import com.limefamily.recommend.RecommendApplication;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by liuhao on 2018/4/13.
  */
@@ -42,6 +45,7 @@ public class FormatUtil {
                 return array[0];
             }
         }catch (Exception e) {
+            e.printStackTrace();
             return RecommendApplication.getInstance().getString(R.string.text_empty);
         }
         return RecommendApplication.getInstance().getString(R.string.text_empty);
@@ -55,6 +59,28 @@ public class FormatUtil {
         }catch (Exception e) {
             e.printStackTrace();
             return RecommendApplication.getInstance().getString(R.string.text_unknown);
+        }
+    }
+
+    public String dateObject2String(Date date) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String dataStr = format.format(date);
+            return dataStr;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return RecommendApplication.getInstance().getString(R.string.text_unknown);
+        }
+    }
+
+    public String timestamp2DateString(long timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if ((timestamp + "").length() == 13) {
+            String date = sdf.format(new Date(timestamp));
+            return date;
+        } else {
+            String date = sdf.format(new Date(timestamp * 1000));
+            return date;
         }
     }
 

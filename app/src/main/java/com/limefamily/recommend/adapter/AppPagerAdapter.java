@@ -3,6 +3,8 @@ package com.limefamily.recommend.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.limefamily.recommend.activity.MainActivity;
 import com.limefamily.recommend.fragment.HomeFragment;
 import com.limefamily.recommend.fragment.RecommendFragment;
 import com.limefamily.recommend.fragment.UserFragment;
@@ -15,18 +17,16 @@ import com.limefamily.recommend.fragment.UserFragment;
 
 public class AppPagerAdapter extends FragmentStatePagerAdapter {
 
-    public static final int TAB_NUM = 3;
-
     public AppPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
+        if (position == MainActivity.TAB_HOME) {
             return HomeFragment.newInstance();
         }
-        else if (position == 1) {
+        else if (position == MainActivity.TAB_RECOMMEND) {
             return RecommendFragment.newInstance();
         }
         return UserFragment.newInstance();
@@ -34,6 +34,6 @@ public class AppPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return TAB_NUM;
+        return MainActivity.TAB_NUMBER;
     }
 }

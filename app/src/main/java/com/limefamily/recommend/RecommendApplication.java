@@ -39,7 +39,6 @@ public class RecommendApplication extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(generateClient())
                 .build();
-        Log.d("test",getToken());
     }
 
     public Retrofit getRetrofit() {

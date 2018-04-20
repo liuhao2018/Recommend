@@ -119,7 +119,7 @@ public class InputAttendantInfoActivity extends AppCompatActivity {
                 @Override
                 public void onTimeSelect(Date date, View v) {
                     if (date != null) {
-                        String birthday = getTime(date);
+                        String birthday = FormatUtil.getInstance().dateObject2String(date);
                         if (!TextUtils.isEmpty(birthday)) {
                             attendantBirthdayTextView.setText(birthday);
                         }
@@ -128,12 +128,6 @@ public class InputAttendantInfoActivity extends AppCompatActivity {
             }).build();
         }
         timePickerView.show();
-    }
-
-    private String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String dataStr = format.format(date);
-        return dataStr;
     }
 
     private void chooseSex() {

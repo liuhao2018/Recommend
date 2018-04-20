@@ -1,13 +1,17 @@
 package com.limefamily.recommend.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.limefamily.recommend.R;
+import com.limefamily.recommend.activity.EasyWebActivity;
 import com.limefamily.recommend.model.News;
+import com.limefamily.recommend.util.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +41,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.coverImageView.setImageURI(newsList.get(position).getCover());
-        holder.titleTextView.setText(newsList.get(position).getTitle());
-        holder.dateTextView.setText(newsList.get(position).getDate());
+    public void onBindViewHolder(final  ViewHolder holder, final int position) {
+        if (!TextUtils.isEmpty(newsList.get(position).getNews_img())) {
+            holder.coverImageView.setImageURI(newsList.get(position).getNews_img());
+        }
+        holder.titleTextView.setText(newsList.get(position).getNews_title());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), EasyWebActivity.class);
+                intent.putExtra(EasyWebActivity.KEY_NEWS_ID,newsList.get(position).getNews_id());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -56,9 +69,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            coverImageView = itemView.findViewById(R.id.iv_img);
-            titleTextView = itemView.findViewById(R.id.tv_title);
-            dateTextView = itemView.findViewById(R.id.tv_date);
+            coverImageView = itemView.findViewById(R.id.iv_image);
+            titleTextView = itemView.findViewById(R.id.tv_desc);
+            dateTextView = itemView.findViewById(R.id.tv_pub_time);
         }
     }
 }

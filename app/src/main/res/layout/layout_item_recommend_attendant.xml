@@ -23,7 +23,7 @@
                 android:id="@+id/tv_recommend_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="#0fb302"
                 android:layout_centerVertical="true"
                 android:text="2016.08.30"/>
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#999999"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:layout_toRightOf="@+id/tv_recommend_date"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -76,14 +76,14 @@
                     android:layout_height="wrap_content"
                     android:textColor="#999999"
                     android:gravity="center"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:text="@string/text_attendant_name"/>
 
                 <TextView
                     android:id="@+id/tv_attendant_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textColor="#666666"
                     android:layout_marginLeft="15dp"/>
 
@@ -101,14 +101,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="#999999"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:text="@string/text_attendant_sex"/>
 
                 <TextView
                     android:id="@+id/tv_attendant_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textColor="#666666"
                     android:layout_marginLeft="15dp"/>
 
@@ -117,7 +117,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="16dp"
                 android:layout_gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -126,14 +126,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="#999999"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:text="@string/text_attendant_birthday"/>
 
                 <TextView
                     android:id="@+id/tv_attendant_birthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textColor="#666666"
                     android:layout_marginLeft="15dp"/>
 
@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#999999"
                     android:gravity="center"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:text="@string/text_attendant_mobile"/>
 
                 <TextView
@@ -159,7 +159,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textColor="#666666"
                     android:layout_marginLeft="15dp"/>
 
@@ -170,7 +170,7 @@
                     android:textColor="#666666"
                     android:textSize="12sp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingRight="35dp"
                     android:text="@string/text_edit"
                     android:visibility="invisible"/>
 

@@ -111,6 +111,8 @@ public class UserFragment extends Fragment implements OnClickListener {
                     .content(R.string.text_real_logout)
                     .positiveText(R.string.text_confirm)
                     .negativeText(R.string.text_cancel)
+                    .positiveColor(getResources().getColor(R.color.app_default))
+                    .negativeColor(getResources().getColor(R.color.app_default))
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
